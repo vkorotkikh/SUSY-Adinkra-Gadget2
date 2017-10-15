@@ -37,7 +37,7 @@ def perm_parity(lst):
 	return parity
 
 #>******************************************************************************
-def org_gadgetcalc(vij_holomat_list, abcoefs, vij_ultramats):
+def org_gadgetcalc(vij_holomat_list, abcoefs)
 
 	lenvijlt = len(vij_holomat_list)
 	print("Len vijlist: ", lenvijlt)
@@ -53,44 +53,20 @@ def org_gadgetcalc(vij_holomat_list, abcoefs, vij_ultramats):
 				# g1val = gadget_one_trace(vijlist[xind], vijlist[zind])
 				# gorig = original_coef_gadget(abcoefs[xind], abcoefs[zind])
 				gtrace = newgadget_trace(vijlist[xind], vijlist[zind])
-				gultra = gadget_ultrafermi(vij_ultramats[xind], vij_ultramats[zind])
 				gnewab = newgadget_abcoef(abcoefs[xind], abcoefs[zind])
-				# print("Adinkras:",xind,zind,"-> Gnew", gtrace, "G-ULTRA", gultra, "GnewAB", gnewab)
-				if gtrace == gnewab and gultra != 0:
+				# print("Adinkras:",xind,zind,"-> Gnew", gtrace, "GnewAB", gnewab)
+				if gtrace == gnewab:
 					totcount+=1
-					# print("Adinkras:",xind,zind,"-> Gnew", gtrace, "G-ULTRA", gultra, "GnewAB", gnewab)
-					print("Adinkras",xind,zind,"-> GnewTrace", gtrace, "GnewAB", gnewab, "G-Ultra", gultra)
+					# print("Adinkras:",xind,zind,"-> Gnew", gtrace,"GnewAB", gnewab)
+					print("Adinkras",xind,zind,"-> GnewTrace", gtrace, "GnewAB", gnewab)
 				elif gtrace != gnewab:
 					probcount+=1
-					print("ERROR: ",xind,zind,"-> GnewTrace", gtrace, "GnewAB", gnewab, "G-Ultra", gultra)
+					print("ERROR: ",xind,zind,"-> GnewTrace", gtrace, "GnewAB", gnewab)
 
 	print("################################################")
 	print("Gadget #:", totcount)
 	print("Error  #:", probcount)
 
-
-#>******************************************************************************
-def gadget_ultrafermi(ultra_vij1, ultra_vij2):
-
-	uij = list(itertools.permutations([0,1,2,3],2))
-	lc_vij = list(itertools.permutations([0,1,2,3],4))
-	# uij = ultra_ij
-	recombin = []
-
-	uij1 = ultra_vij1.copy()
-	uij2 = ultra_vij2.copy()
-	for xij in lc_vij:
-		xl = list(xij)
-		lc_factor = perm_parity(xl)
-		vij1 = xij[0:2]
-		vij2 = xij[2:4]
-		recombin.append((uij.index(vij1), uij.index(vij2), lc_factor))
-	bgmess = [np.multiply(np.dot(uij1[rij[0]],uij2[rij[1]]),rij[2]) for rij in recombin]
-	trvals = [np.trace(bg) for bg in bgmess]
-	# print("ULTRA TRACE:", sum(trvals))
-	# gadgetval = sum(trvals)/(96)
-	gadgetval = sum(trvals)/(32)
-	return int(gadgetval)
 
 #>******************************************************************************
 def newgadget_trace(vij_holomats1, vij_holomats2):

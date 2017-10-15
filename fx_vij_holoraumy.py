@@ -1,5 +1,5 @@
 # ******************************************************************************
-# Name:    Functions for computing Vij matrices 
+# Name:    Functions for computing Vij matrices
 # Author:  Vadim Korotkikh
 # Date:    September 2017
 # Description:  Scripts for calculating Vij matrices for each one of 36864
@@ -34,10 +34,6 @@ def alphas_betas():
 	tlist = [alpha1i, alpha2i, alpha3i, beta1i, beta2i, beta3i]
 	# factor_2list = [np.divide(x,2) for x in tlist]
 	return tlist
-
-#>******************************************************************************
-def mp_spreadcalc(main_adink_list):
-	pass
 
 
 #>******************************************************************************

@@ -59,79 +59,64 @@ def mpp_org_gadgetcalc(vij_holomat_list, abcoefs):
 
 
 #>******************************************************************************
-# def org_gadgetcalc(vij_holomat_list, abcoefs, vij_ultramats):
-def org_gadgetcalc(vij_holomat_list, abcoefs):
+# def org_gadgetcalc(vij_holomat_list, abcoefs):
+def mporg_gadgetcalc(vij_holomat_list, abcoefs):
 	print("Executing ", __name__)
 	start_time = time.time()
+
 	lenvijlt = len(vij_holomat_list)
 	vijlist = vij_holomat_list
 	# exelen = int(lenvijlt/32)
 	# pack	= 1024
-	nx		= int(lenvijlt/64)
-	# cx		= int(lenvijlt/64)
-	pool 	= mp.Pool(processes=64)
-	# pooldex	= mp.Pool(processes=64)
-	nfkr	= 2
-	# islice  = 4608*nfkr
-	islice = 11640
-	fonesix = vijlist[islice:18432]
-	ablist 	= abcoefs[islice:18432]
-	for ind in range(0,islice):
-		print("Adinkra:", ind+islice)
-		imat	= fonesix[ind]
-		icof	= ablist[ind]
-		complt	= []
-		npacked = [vijlist[i:i+nx] for i in range(islice+ind, lenvijlt, nx)]
-		cpacked = [abcoefs[i:i+nx] for i in range(islice+ind, lenvijlt, nx)]
-		npklen 	= len(npacked)
-		# acalc 	= [pool.apply(newgadget_mtraces, args=(imat, npacked[xi], xi)) for xi in range(0,16)]
-		mtracs = [pool.apply_async(newgadget_mtraces, args=(imat, npacked[xi], xi)) for xi in range(0,npklen)]
-		abcalc = [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi)) for xi in range(0,npklen)]
-		# chkval = [pool.apply_async(watch_this, args=(mtracs[i].get(), abcalc[i].get(), npklen)) for i in range(0,npklen)]
-		pr_sw  = 0
-		for px in range(0,npklen):
-			mtracpak = mtracs[px].get()
-			abcofpak = abcalc[px].get()
-			# pr_sw = (mtracpak == abcofpak)
-			cstr = "Gadget Pack # " + str(px) + " Result: " + str(mtracpak == abcofpak)
-			complt.append(cstr)
 
-		# for px in chkval:
-		# 	tl = px.get()
-		# 	complt.append(tl)
-		acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
-		# if 'False' in complt:
-		# 	for px in range(0, npklen):
-		#
-		with open(acalc, 'w') as wfile:
-			wfile.write("Adinkra: %s \n" % ind)
-			for cval in complt:
-				wfile.write("%s \n" % cval)
+
+	numpaks	= 8	# Number of calculation packs
+	nx		= int(lenvijlt/64)
+	pool 	= mp.Pool(processes=64)
+	paksize = int(lenvijlt/numpaks)	# Splitting 36k A into n sets of len paksize
+	indpaks	= [paksize*n for n in range(0,numpaks)]
+
+	for ix, pak in enumerate(indpaks):
+		nfkr	= 2
+		# islice  = 4608*nfkr
+		eslice = pak + paksize
+		tracespak 	= vijlist[pak:eslice]
+		abcoefpak 	= abcoefs[pak:eslice]
+		adjadinknum	= (ix+1)*paksize
+		for ind in range(0,paksize):
+			print("Adinkra:", ind + ix
+			imat	= fonesix[ind]
+			icof	= ablist[ind]
+			complt	= []
+			npacked = [vijlist[i:i+nx] for i in range(islice+ind, lenvijlt, nx)]
+			cpacked = [abcoefs[i:i+nx] for i in range(islice+ind, lenvijlt, nx)]
+			npklen 	= len(npacked)
+			# acalc 	= [pool.apply(newgadget_mtraces, args=(imat, npacked[xi], xi)) for xi in range(0,16)]
+			mtracs = [pool.apply_async(newgadget_mtraces, args=(imat, npacked[xi], xi)) for xi in range(0,npklen)]
+			abcalc = [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi)) for xi in range(0,npklen)]
+			# chkval = [pool.apply_async(watch_this, args=(mtracs[i].get(), abcalc[i].get(), npklen)) for i in range(0,npklen)]
+			pr_sw  = 0
+			for px in range(0,npklen):
+				mtracpak = mtracs[px].get()
+				abcofpak = abcalc[px].get()
+				# pr_sw = (mtracpak == abcofpak)
+				cstr = "Gadget Pack # " + str(px) + " Result: " + str(mtracpak == abcofpak)
+				complt.append(cstr)
+
+			# for px in chkval:
+			# 	tl = px.get()
+			# 	complt.append(tl)
+			acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
+			# if 'False' in complt:
+			# 	for px in range(0, npklen):
+			#
+			with open(acalc, 'w') as wfile:
+				wfile.write("Adinkra: %s \n" % ind)
+				for cval in complt:
+					wfile.write("%s \n" % cval)
 
 	print("-- Execution time --")
 	print("---- %s seconds ----" % (time.time() - start_time))
-	# exit()
-	# for xind in range(0, exelen):
-	# 	# for zind in range(xind+1, exelen+1):
-	# 	for zind in range(xind+1, lenvijlt):
-	# 		# print("A:",xind,zind)
-	# 		# g1val = gadget_one_trace(vijlist[xind], vijlist[zind])
-	# 		# gorig = original_coef_gadget(abcoefs[xind], abcoefs[zind])
-	# 		gtrace = newgadget_trace(vijlist[xind], vijlist[zind])
-	# 		gultra = gadget_ultrafermi(vij_ultramats[xind], vij_ultramats[zind])
-	# 		gnewab = newgadget_abcoef(abcoefs[xind], abcoefs[zind])
-	# 		# print("Adinkras:",xind,zind,"-> Gnew", gtrace, "G-ULTRA", gultra, "GnewAB", gnewab)
-	# 		if gtrace == gnewab and gultra != 0:
-	# 			totcount+=1
-	# 			# print("Adinkras:",xind,zind,"-> Gnew", gtrace, "G-ULTRA", gultra, "GnewAB", gnewab)
-	# 			print("Adinkras",xind,zind,"-> GnewTrace", gtrace, "GnewAB", gnewab, "G-Ultra", gultra)
-	# 		elif gtrace != gnewab:
-	# 			probcount+=1
-	# 			print("ERROR: ",xind,zind,"-> GnewTrace", gtrace, "GnewAB", gnewab, "G-Ultra", gultra)
-	#
-	# print("################################################")
-	# print("Gadget #:", totcount)
-	# print("Error  #:", probcount)
 
 #>******************************************************************************
 def watch_this(disone, distwo, lenval):
@@ -142,29 +127,6 @@ def watch_this(disone, distwo, lenval):
 	cstr = "Gadget Pack # " + str(lenval) + " Result: " + str(disone == distwo)
 		# somelist.append(cstr)
 	return cstr
-
-#>******************************************************************************
-def gadget_ultrafermi(ultra_vij1, ultra_vij2):
-
-	uij = list(itertools.permutations([0,1,2,3],2))
-	lc_vij = list(itertools.permutations([0,1,2,3],4))
-	# uij = ultra_ij
-	recombin = []
-
-	uij1 = ultra_vij1.copy()
-	uij2 = ultra_vij2.copy()
-	for xij in lc_vij:
-		xl = list(xij)
-		lc_factor = perm_parity(xl)
-		vij1 = xij[0:2]
-		vij2 = xij[2:4]
-		recombin.append((uij.index(vij1), uij.index(vij2), lc_factor))
-	bgmess = [np.multiply(np.dot(uij1[rij[0]],uij2[rij[1]]),rij[2]) for rij in recombin]
-	trvals = [np.trace(bg) for bg in bgmess]
-	# print("ULTRA TRACE:", sum(trvals))
-	# gadgetval = sum(trvals)/(96)
-	gadgetval = sum(trvals)/(32)
-	return int(gadgetval)
 
 #>******************************************************************************
 def newgadget_mtraces(vij_holomat, vij_holomats, adind):

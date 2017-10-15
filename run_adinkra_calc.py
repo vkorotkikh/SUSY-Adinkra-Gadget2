@@ -44,7 +44,7 @@ def main():
 		vijmat_list = NewAdink.ret_fermiholo()
 		abcoef_list = NewAdink.ret_fermi_abcoef()
 		# ultra_fermi = NewAdink.ret_ultrafermi()
-		fxmp_gadgets.org_gadgetcalc(vijmat_list, abcoef_list)
+		fxmp_gadgets.mporg_gadgetcalc(vijmat_list, abcoef_list)
 		# fx_gadgets.org_gadgetcalc(vijmat_list, abcoef_list,ultra_fermi)
 
 		# NewAdink.exe_fermiorder()

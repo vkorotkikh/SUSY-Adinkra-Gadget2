@@ -50,11 +50,6 @@ class AdinkraSet():
 		self.fermi_mats = templist
 
 	#>**************************************************************************
-	def get_ultrafermi(self):
-		templist = fx_vij_holoraumy.calc_ultrafermi_vij(self.adinkra_list)
-		self.ultrafermi_mt = templist
-
-	#>**************************************************************************
 	def get_fermi_abcoef(self):
 		templist = fx_vij_holoraumy.calc_vij_alphabeta(self.adinkra_list)
 		self.fermi_abcoefs = templist
