@@ -66,9 +66,6 @@ def mporg_gadgetcalc(vij_holomat_list, abcoefs):
 
 	lenvijlt = len(vij_holomat_list)
 	vijlist = vij_holomat_list
-	# exelen = int(lenvijlt/32)
-	# pack	= 1024
-
 
 	numpaks	= 8	# Number of calculation packs
 	nx		= int(lenvijlt/64)
@@ -88,8 +85,8 @@ def mporg_gadgetcalc(vij_holomat_list, abcoefs):
 			imat	= fonesix[ind]
 			icof	= ablist[ind]
 			complt	= []
-			npacked = [vijlist[i:i+nx] for i in range(islice+ind, lenvijlt, nx)]
-			cpacked = [abcoefs[i:i+nx] for i in range(islice+ind, lenvijlt, nx)]
+			npacked = [vijlist[i:i+nx] for i in range(eslice+ind, lenvijlt, nx)]
+			cpacked = [abcoefs[i:i+nx] for i in range(eslice+ind, lenvijlt, nx)]
 			npklen 	= len(npacked)
 			# acalc 	= [pool.apply(newgadget_mtraces, args=(imat, npacked[xi], xi)) for xi in range(0,16)]
 			mtracs = [pool.apply_async(newgadget_mtraces, args=(imat, npacked[xi], xi)) for xi in range(0,npklen)]
