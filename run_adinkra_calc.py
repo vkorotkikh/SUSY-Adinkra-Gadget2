@@ -35,7 +35,7 @@ def main():
 	print("		")
 	adinkra_list	= []
 	adinkra_list	= adinkra_nxn_constructor.create_adinkras(4,4)
-	cwdpath	= os.getpath()
+	cwdpath	= os.getcwd()
 	if not os.path.isdir((cwdpath + "/GadgetVal")):
 		os.makedirs((cwdpath + "/GadgetVal"))
 	# print("1st: ", type(adinkra_list[0]), adinkra_list[0])
