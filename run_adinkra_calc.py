@@ -35,6 +35,7 @@ def main():
 	print("		")
 	adinkra_list	= []
 	adinkra_list	= adinkra_nxn_constructor.create_adinkras(4,4)
+
 	cwdpath	= os.getcwd()
 	if not os.path.isdir((cwdpath + "/GadgetVal")):
 		os.makedirs((cwdpath + "/GadgetVal"))
@@ -52,6 +53,11 @@ def main():
 
 		# NewAdink.exe_fermiorder()
 
+#>**************************************************************************
+def check_or_makedir(dirname, dirpath=""):
+
+	runad_realpath = os.path
+	pass
 
 #>**************************************************************************
 def user_options():
