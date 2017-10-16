@@ -56,8 +56,12 @@ def main():
 #>**************************************************************************
 def check_or_makedir(dirname, dirpath=""):
 
-	runad_realpath = os.path
-	pass
+	runad_rpath = os.path.realpath(__file__)
+	chkdirpath = runad_rpath + "/" + dirname
+	if not os.path.isdir(chkdirpath):
+		os.makedirs(chkdirpath)
+	else:
+		pass
 
 #>**************************************************************************
 def user_options():
