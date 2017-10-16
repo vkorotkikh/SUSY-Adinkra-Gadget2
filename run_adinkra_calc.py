@@ -37,10 +37,10 @@ def main():
 	adinkra_list	= adinkra_nxn_constructor.create_adinkras(4,4)
 
 	cwdpath	= os.getcwd()
-	if not os.path.isdir((cwdpath + "/GadgetVal")):
-		os.makedirs((cwdpath + "/GadgetVal"))
+	check_or_makedir("GadgetVal")
 	# print("1st: ", type(adinkra_list[0]), adinkra_list[0])
 	# vij_holoraumy_calc.calc_vij_matrices(adinkra_list)
+	exit()
 	if len(adinkra_list) > 1:
 		NewAdink = cls_adinkra_set.AdinkraSet(4,4,adinkra_list)
 		NewAdink.exe_fermiorder()
@@ -56,8 +56,10 @@ def main():
 #>**************************************************************************
 def check_or_makedir(dirname, dirpath=""):
 
-	runad_rpath = os.path.realpath(__file__)
-	chkdirpath = runad_rpath + "/" + dirname
+	runad_fullpath = os.path.realpath(__file__)
+	runad_dirpath  = os.path.dirname(runad_fullpath)
+	print("Dirpath = dirname :", runad_dirpath)
+	chkdirpath = runad_dirpath + "/" + dirname
 	if not os.path.isdir(chkdirpath):
 		os.makedirs(chkdirpath)
 	else:
