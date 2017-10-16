@@ -17,7 +17,7 @@ import fx_gadgets
 import vij_holoraumy_calc
 import adinkra_nxn_constructor
 import cls_adinkra_set
-import fxmp_gadgets
+import fx_mpgadgets
 
 #>******************************************************************************
 def main():
@@ -44,7 +44,7 @@ def main():
 		vijmat_list = NewAdink.ret_fermiholo()
 		abcoef_list = NewAdink.ret_fermi_abcoef()
 		# ultra_fermi = NewAdink.ret_ultrafermi()
-		fxmp_gadgets.mporg_gadgetcalc(vijmat_list, abcoef_list)
+		fx_mpgadgets.mporg_gadgetcalc(vijmat_list, abcoef_list)
 		# fx_gadgets.org_gadgetcalc(vijmat_list, abcoef_list,ultra_fermi)
 
 		# NewAdink.exe_fermiorder()

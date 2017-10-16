@@ -76,17 +76,17 @@ def mporg_gadgetcalc(vij_holomat_list, abcoefs):
 	for ix, pak in enumerate(indpaks):
 		nfkr	= 2
 		# islice  = 4608*nfkr
-		eslice = pak + paksize
-		tracespak 	= vijlist[pak:eslice]
-		abcoefpak 	= abcoefs[pak:eslice]
+		islice = pak + paksize
+		tracespak 	= vijlist[pak:islice]
+		abcoefpak 	= abcoefs[pak:islice]
 		adjadinknum	= (ix+1)*paksize
 		for ind in range(0,paksize):
-			print("Adinkra:", ind + ix
-			imat	= fonesix[ind]
-			icof	= ablist[ind]
+			print("Adinkra:", ind + paksize*ix)
+			imat	= tracespak[ind]
+			icof	= abcoefpak[ind]
 			complt	= []
-			npacked = [vijlist[i:i+nx] for i in range(eslice+ind, lenvijlt, nx)]
-			cpacked = [abcoefs[i:i+nx] for i in range(eslice+ind, lenvijlt, nx)]
+			npacked = [vijlist[i:i+nx] for i in range(islice+ind, lenvijlt, nx)]
+			cpacked = [abcoefs[i:i+nx] for i in range(islice+ind, lenvijlt, nx)]
 			npklen 	= len(npacked)
 			# acalc 	= [pool.apply(newgadget_mtraces, args=(imat, npacked[xi], xi)) for xi in range(0,16)]
 			mtracs = [pool.apply_async(newgadget_mtraces, args=(imat, npacked[xi], xi)) for xi in range(0,npklen)]

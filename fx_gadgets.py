@@ -37,7 +37,7 @@ def perm_parity(lst):
 	return parity
 
 #>******************************************************************************
-def org_gadgetcalc(vij_holomat_list, abcoefs)
+def org_gadgetcalc(vij_holomat_list, abcoefs):
 
 	lenvijlt = len(vij_holomat_list)
 	print("Len vijlist: ", lenvijlt)
