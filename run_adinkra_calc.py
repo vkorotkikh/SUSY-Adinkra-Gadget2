@@ -40,7 +40,6 @@ def main():
 	check_or_makedir("GadgetVal", cwdpath)
 	# print("1st: ", type(adinkra_list[0]), adinkra_list[0])
 	# vij_holoraumy_calc.calc_vij_matrices(adinkra_list)
-	exit()
 	if len(adinkra_list) > 1:
 		NewAdink = cls_adinkra_set.AdinkraSet(4,4,adinkra_list)
 		NewAdink.exe_fermiorder()

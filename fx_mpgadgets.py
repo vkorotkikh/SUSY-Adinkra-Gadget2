@@ -25,11 +25,6 @@ def info(title):
 	print("")
 
 #>******************************************************************************
-def cube(x):
-	x_quad = x**4
-	return x**(1/2)
-
-#>******************************************************************************
 def mpp_org_gadgetcalc(vij_holomat_list, abcoefs):
 	print("Executing ", __name__)
 	start_time = time.time()
@@ -78,9 +73,10 @@ def mporg_gadgetcalc(vij_holomat_list, abcoefs):
 		islice = pak + paksize
 		tracespak 	= vijlist[pak:islice]
 		abcoefpak 	= abcoefs[pak:islice]
-		adjadinknum	= (ix+1)*paksize
+		# adjadinknum	= pak
 		for ind in range(0,paksize):
-			print("Adinkra:", ind + paksize*ix)
+			adjadinknum = ind + pak
+			print("Adinkra:", adjadinknum)
 			imat	= tracespak[ind]
 			icof	= abcoefpak[ind]
 			complt	= []
@@ -102,7 +98,8 @@ def mporg_gadgetcalc(vij_holomat_list, abcoefs):
 			# for px in chkval:
 			# 	tl = px.get()
 			# 	complt.append(tl)
-			acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
+			# acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
+			acalc = "Adinkra_" + str(adjadinknum) + ".txt"
 			# if 'False' in complt:
 			# 	for px in range(0, npklen):
 			#
