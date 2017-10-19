@@ -26,13 +26,13 @@ def info(title):
 
 #>******************************************************************************
 # def org_gadgetcalc(vij_holomat_list, abcoefs):
-def mp_gadgetcalc_abonly(abcoefs_list, numpaks=4):
+def mp_gadgetcalc_abonly(abcoef_list, numpaks=4):
 	""" Do the new Gadget calc only for Alpha-Beta coefficients	"""
 	print("Executing ", __name__)
 	start_time = time.time()
 
-	lenablist = len(abcoefs_list)
-	ablist = abcoefs_list[:]
+	lenablist = len(abcoef_list)
+	ablist = abcoef_list[:]
 
 	numpaks	= 8	# Number of calculation packs
 	nx		= int(lenablist/64)
@@ -41,36 +41,25 @@ def mp_gadgetcalc_abonly(abcoefs_list, numpaks=4):
 	indpaks	= [paksize*n for n in range(0,numpaks)]
 
 	for ix, pak in enumerate(indpaks):
-
 		islice = pak + paksize
-		tracespak 	= vijlist[pak:islice]
-		abcoefpak 	= abcoefs[pak:islice]
+		abcoefpak 	= ablist[pak:islice]
 		# print("Length ab ", len(abcoefpak))
 		# print("Pack/Slice -", pak, ":", islice)
 		for ind in range(0,paksize):
 			adjadinknum = ind + pak
 			print("Adinkra:", adjadinknum)
-
-			imat	= tracespak[ind]
 			icof	= abcoefpak[ind]
 			complt	= []
-			cpacked = [abcoefs[i:i+nx] for i in range(islice+ind, lenablist, nx)]
-			npklen 	= len(npacked)
-			mtracs = [pool.apply_async(newgadget_mtraces, args=(imat, npacked[xi], xi)) for xi in range(0,npklen)]
-			abcalc = [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi)) for xi in range(0,npklen)]
-			pr_sw  = 0
-			for px in range(0,npklen):
-				mtracpak = mtracs[px].get()
+			cpacked = [ablist[i:i+nx] for i in range(islice+ind, lenablist, nx)]
+			cpklen 	= len(cpacked)
+			abcalc = [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi)) for xi in range(0,cpklen)]
+
+			for px in range(0,cpklen):
 				abcofpak = abcalc[px].get()
-				# pr_sw = (mtracpak == abcofpak)
-				# cstr = "Gadget val # " + str(px) + " Result: " + str(mtracpak == abcofpak)
 				for gtval in abcofpak:
 					gval = "Gadget val: " + str(gtval)
 					complt.append(gval)
 
-			# for px in chkval:
-			# 	tl = px.get()
-			# 	complt.append(tl)
 			# acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
 			acalc = "GadgetVal/Adinkra_" + str(adjadinknum) + ".txt"
 			with open(acalc, 'w') as wfile:
@@ -273,6 +262,6 @@ def test_mpp():
 if __name__ == "__main__":
 	# test_mpp()
 	start_time = time.time()
-	test_mpp_async()
+	test_mpp()
 	print("-- Execution time --")
 	print("---- %s seconds ----" % (time.time() - start_time))
