@@ -92,8 +92,10 @@ def mporg_gadgetcalc(vij_holomat_list, abcoefs):
 				mtracpak = mtracs[px].get()
 				abcofpak = abcalc[px].get()
 				# pr_sw = (mtracpak == abcofpak)
-				cstr = "Gadget Pack # " + str(px) + " Result: " + str(mtracpak == abcofpak)
-				complt.append(cstr)
+				# cstr = "Gadget val # " + str(px) + " Result: " + str(mtracpak == abcofpak)
+				for gtval in abcofpak:
+					gval = "Gadget val: " + str(gtval)
+					complt.append(gval)
 
 			# for px in chkval:
 			# 	tl = px.get()
