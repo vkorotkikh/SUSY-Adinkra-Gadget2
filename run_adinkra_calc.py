@@ -53,7 +53,7 @@ def main():
 
 		# NewAdink.exe_fermiorder()
 
-#>**************************************************************************
+#>******************************************************************************
 def check_or_makedir(dirname, dirpath=''):
 	print("Dirpath: ", dirpath)
 	runad_fullpath = os.path.realpath(__file__)
@@ -69,7 +69,7 @@ def check_or_makedir(dirname, dirpath=''):
 	else:
 		pass
 
-#>**************************************************************************
+#>******************************************************************************
 def user_options():
 	""" Terminal user options defined/coded here w/ help from inner functions
 	"""
@@ -213,7 +213,7 @@ def user_options():
 	uinput = core_options()
 	option_activator(uinput)
 
-#>**************************************************************************
+#>******************************************************************************
 if __name__ == "__main__":
 	start_time = time.time()
 	main()

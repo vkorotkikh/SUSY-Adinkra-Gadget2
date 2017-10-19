@@ -74,8 +74,7 @@ def mporg_gadgetcalc(vij_holomat_list, abcoefs):
 	indpaks	= [paksize*n for n in range(0,numpaks)]
 
 	for ix, pak in enumerate(indpaks):
-		nfkr	= 2
-		# islice  = 4608*nfkr
+
 		islice = pak + paksize
 		tracespak 	= vijlist[pak:islice]
 		abcoefpak 	= abcoefs[pak:islice]
