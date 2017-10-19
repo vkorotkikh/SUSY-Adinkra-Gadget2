@@ -99,7 +99,7 @@ def mporg_gadgetcalc(vij_holomat_list, abcoefs):
 			# 	tl = px.get()
 			# 	complt.append(tl)
 			# acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
-			acalc = "Adinkra_" + str(adjadinknum) + ".txt"
+			acalc = "GadgetVal/Adinkra_" + str(adjadinknum) + ".txt"
 			# if 'False' in complt:
 			# 	for px in range(0, npklen):
 			#
