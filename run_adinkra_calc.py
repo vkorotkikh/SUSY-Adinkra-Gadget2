@@ -60,7 +60,7 @@ def check_or_makedir(dirname, dirpath=''):
 		pass
 	elif dirpath != '':
 		runad_dirpath = dirpath
-	print("dirname :", runad_dirpath)
+	# print("dirname :", runad_dirpath)
 	chkdirpath = runad_dirpath + "/" + dirname
 	if not os.path.isdir(chkdirpath):
 		os.makedirs(chkdirpath)

@@ -24,34 +24,6 @@ def info(title):
 	print('process id:', os.getpid())
 	print("")
 
-#>******************************************************************************
-def mpp_org_gadgetcalc(vij_holomat_list, abcoefs):
-	print("Executing ", __name__)
-	start_time = time.time()
-	lenvijlt = len(vij_holomat_list)
-	vijlist = vij_holomat_list
-	exelen = int(lenvijlt/32)
-
-	pack	= 32
-	nx		= int(lenvijlt/16)
-	pool = mp.Pool(processes=8)
-	fonesix = vijlist[0:pack]
-	# for ind, xad in enumerate(fonesix):
-	rescalcs = [pool.apply_async(newgadget_mtraces, args=(fonesix[xs], vijlist[xs:], xs)) for xs in range(0,pack)]
-	for p in rescalcs:
-		allgs = p.get()
-
-	# for ind, xad in enumerate(fonesix):
-	# 	print("Adinkra:", ind)
-	# 	npacked = [vijlist[i:i+nx] for i in range(ind, lenvijlt, nx)]
-	# 	# acalc 	= [pool.apply(newgadget_mtraces, args=(xad, npacked[xi], xi)) for xi in range(0,16)]
-	# 	acalc = [pool.apply_async(newgadget_mtraces, args=(xad, npacked[xi], xi)) for xi in range(0,len(npacked))]
-	# 	for px in acalc:
-	# 		somex = px.get()
-			# print(len(somex))
-		# acalc = "Adinkra_" + str(ind+1) + "_Gadgets.txt"
-		# with open(acalc, 'w') as rf:
-
 
 #>******************************************************************************
 # def org_gadgetcalc(vij_holomat_list, abcoefs):
@@ -73,20 +45,20 @@ def mporg_gadgetcalc(vij_holomat_list, abcoefs):
 		islice = pak + paksize
 		tracespak 	= vijlist[pak:islice]
 		abcoefpak 	= abcoefs[pak:islice]
-		# adjadinknum	= pak
+		# print("Length ab ", len(abcoefpak))
+		# print("Pack/Slice -", pak, ":", islice)
 		for ind in range(0,paksize):
 			adjadinknum = ind + pak
 			print("Adinkra:", adjadinknum)
+
 			imat	= tracespak[ind]
 			icof	= abcoefpak[ind]
 			complt	= []
 			npacked = [vijlist[i:i+nx] for i in range(islice+ind, lenvijlt, nx)]
 			cpacked = [abcoefs[i:i+nx] for i in range(islice+ind, lenvijlt, nx)]
 			npklen 	= len(npacked)
-			# acalc 	= [pool.apply(newgadget_mtraces, args=(imat, npacked[xi], xi)) for xi in range(0,16)]
 			mtracs = [pool.apply_async(newgadget_mtraces, args=(imat, npacked[xi], xi)) for xi in range(0,npklen)]
 			abcalc = [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi)) for xi in range(0,npklen)]
-			# chkval = [pool.apply_async(watch_this, args=(mtracs[i].get(), abcalc[i].get(), npklen)) for i in range(0,npklen)]
 			pr_sw  = 0
 			for px in range(0,npklen):
 				mtracpak = mtracs[px].get()
@@ -102,9 +74,6 @@ def mporg_gadgetcalc(vij_holomat_list, abcoefs):
 			# 	complt.append(tl)
 			# acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
 			acalc = "GadgetVal/Adinkra_" + str(adjadinknum) + ".txt"
-			# if 'False' in complt:
-			# 	for px in range(0, npklen):
-			#
 			with open(acalc, 'w') as wfile:
 				wfile.write("Adinkra: %s \n" % ind)
 				for cval in complt:
@@ -113,15 +82,6 @@ def mporg_gadgetcalc(vij_holomat_list, abcoefs):
 	print("-- Execution time --")
 	print("---- %s seconds ----" % (time.time() - start_time))
 
-#>******************************************************************************
-def watch_this(disone, distwo, lenval):
-	# somelist = []
-	# for px in range(0, lenval):
-	# 	mtracpak = disone[px]
-	# 	abcofpak = distwo[px]
-	cstr = "Gadget Pack # " + str(lenval) + " Result: " + str(disone == distwo)
-		# somelist.append(cstr)
-	return cstr
 
 #>******************************************************************************
 def newgadget_mtraces(vij_holomat, vij_holomats, adind):
@@ -200,6 +160,35 @@ def newgadget_abcoefs(coef_l1, abcoefs, adind):
 		else:
 			gadgetvals.append(0)
 	return gadgetvals
+
+#>******************************************************************************
+def mpp_org_gadgetcalc(vij_holomat_list, abcoefs):
+	print("Executing ", __name__)
+	start_time = time.time()
+	lenvijlt = len(vij_holomat_list)
+	vijlist = vij_holomat_list
+	exelen = int(lenvijlt/32)
+
+	pack	= 32
+	nx		= int(lenvijlt/16)
+	pool = mp.Pool(processes=8)
+	fonesix = vijlist[0:pack]
+	# for ind, xad in enumerate(fonesix):
+	rescalcs = [pool.apply_async(newgadget_mtraces, args=(fonesix[xs], vijlist[xs:], xs)) for xs in range(0,pack)]
+	for p in rescalcs:
+		allgs = p.get()
+
+	# for ind, xad in enumerate(fonesix):
+	# 	print("Adinkra:", ind)
+	# 	npacked = [vijlist[i:i+nx] for i in range(ind, lenvijlt, nx)]
+	# 	# acalc 	= [pool.apply(newgadget_mtraces, args=(xad, npacked[xi], xi)) for xi in range(0,16)]
+	# 	acalc = [pool.apply_async(newgadget_mtraces, args=(xad, npacked[xi], xi)) for xi in range(0,len(npacked))]
+	# 	for px in acalc:
+	# 		somex = px.get()
+			# print(len(somex))
+		# acalc = "Adinkra_" + str(ind+1) + "_Gadgets.txt"
+		# with open(acalc, 'w') as rf:
+
 
 #>******************************************************************************
 def rand_string(length, output):
