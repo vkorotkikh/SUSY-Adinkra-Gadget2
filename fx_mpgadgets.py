@@ -24,10 +24,66 @@ def info(title):
 	print('process id:', os.getpid())
 	print("")
 
+#>******************************************************************************
+# def org_gadgetcalc(vij_holomat_list, abcoefs):
+def mp_gadgetcalc_abonly(abcoefs_list, numpaks=4):
+	""" Do the new Gadget calc only for Alpha-Beta coefficients	"""
+	print("Executing ", __name__)
+	start_time = time.time()
+
+	lenablist = len(abcoefs_list)
+	ablist = abcoefs_list[:]
+
+	numpaks	= 8	# Number of calculation packs
+	nx		= int(lenablist/64)
+	pool 	= mp.Pool(processes=64)
+	paksize = int(lenablist/numpaks)	# Splitting 36k A into n sets of len paksize
+	indpaks	= [paksize*n for n in range(0,numpaks)]
+
+	for ix, pak in enumerate(indpaks):
+
+		islice = pak + paksize
+		tracespak 	= vijlist[pak:islice]
+		abcoefpak 	= abcoefs[pak:islice]
+		# print("Length ab ", len(abcoefpak))
+		# print("Pack/Slice -", pak, ":", islice)
+		for ind in range(0,paksize):
+			adjadinknum = ind + pak
+			print("Adinkra:", adjadinknum)
+
+			imat	= tracespak[ind]
+			icof	= abcoefpak[ind]
+			complt	= []
+			cpacked = [abcoefs[i:i+nx] for i in range(islice+ind, lenablist, nx)]
+			npklen 	= len(npacked)
+			mtracs = [pool.apply_async(newgadget_mtraces, args=(imat, npacked[xi], xi)) for xi in range(0,npklen)]
+			abcalc = [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi)) for xi in range(0,npklen)]
+			pr_sw  = 0
+			for px in range(0,npklen):
+				mtracpak = mtracs[px].get()
+				abcofpak = abcalc[px].get()
+				# pr_sw = (mtracpak == abcofpak)
+				# cstr = "Gadget val # " + str(px) + " Result: " + str(mtracpak == abcofpak)
+				for gtval in abcofpak:
+					gval = "Gadget val: " + str(gtval)
+					complt.append(gval)
+
+			# for px in chkval:
+			# 	tl = px.get()
+			# 	complt.append(tl)
+			# acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
+			acalc = "GadgetVal/Adinkra_" + str(adjadinknum) + ".txt"
+			with open(acalc, 'w') as wfile:
+				wfile.write("Adinkra: %s \n" % ind)
+				for cval in complt:
+					wfile.write("%s \n" % cval)
+
+	print("-- Execution time --")
+	print("---- %s seconds ----" % (time.time() - start_time))
 
 #>******************************************************************************
 # def org_gadgetcalc(vij_holomat_list, abcoefs):
-def mporg_gadgetcalc(vij_holomat_list, abcoefs):
+def mp_gadgetcalc_abtr(vij_holomat_list, abcoefs):
 	print("Executing ", __name__)
 	start_time = time.time()
 
