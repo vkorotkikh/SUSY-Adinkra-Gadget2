@@ -58,7 +58,8 @@ def mp_gadgetcalc_abonly(abcoef_list, numpaks=8):
 			for px in range(0,cpklen):
 				abcofpak = abcalc[px].get()
 				for gtval in abcofpak:
-					gval = "Gadget val: " + str(gtval)
+					indstr = "(" + str(adjadinknum) + "," + gtval[1] + ")"
+					gval = "Gval:" + indstr + "-> " + gtval[0]
 					complt.append(gval)
 
 			# acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
