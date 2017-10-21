@@ -43,15 +43,17 @@ def mp_gadgetcalc_abonly(abcoef_list, numpaks=8):
 	for ix, pak in enumerate(indpaks):
 		islice = pak + paksize
 		abcoefpak 	= ablist[pak:islice]
+		print("")
 		# print("Length ab ", len(abcoefpak))
-		# print("Pack/Slice -", pak, ":", islice)
+		print("Pack/Slice -", pak, ":", islice)
 		for ind in range(0,paksize):
 			adjadinknum = ind + pak
 			print("Adinkra:", adjadinknum)
 			icof	= abcoefpak[ind]
 			complt	= []
-			cpacked = [ablist[i:i+nx] for i in range(islice+ind, lenablist, nx)]
+			cpacked = [ablist[i:i+nx] for i in range(pak+ind, lenablist, nx)]
 			cpklen 	= len(cpacked)
+			print(cpklen)
 			abcalc = [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi)) for xi in range(0,cpklen)]
 
 			for px in range(0,cpklen):
