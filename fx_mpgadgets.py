@@ -40,22 +40,28 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 	paksize = int(lenablist/numpaks)	# Splitting 36k A into n sets of len paksize
 	indpaks	= [paksize*n for n in range(0,numpaks)]
 
-	for ix, pak in enumerate(indpaks):
+	for ix, pak in enumerate(indpaks): # for ix 0-7, pak 0-32256, steps 4608
 		islice = pak + paksize
 		abcoefpak 	= ablist[pak:islice]
 		# print("Length ab ", len(abcoefpak))
 		print("Pack/Slice: ", pak, ":", islice)
 		for ind in range(0,paksize):
+			if ind == 2:
+				exit()
 			adjadinknum = ind + pak
 			print("Adinkra:", adjadinknum)
 			icof	= abcoefpak[ind]
 			complt	= []
-			cpacked = [ablist[i:i+nx] for i in range(ind + pak, lenablist, nx)]
+			rngval 	= list(range(adjadinknum, lenablist, nx))
+			cpacked = [ablist[i:i+nx] for i in rngval if (i+nx) < lenablist]
+			cpacked.append(ablist[rngval[-1]:])
 			cpklen 	= len(cpacked)
-			abcalc = [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi, adjadinknum)) for xi in range(0,cpklen)]
-			aval 	= "0"
+			abcalc 	= [pool.apply(newgadget_abcoefs, args=(icof, cpacked[xi],xi, adjadinknum)) for xi in range(0,cpklen)]
+			sinds	= [x[1] for x in abcalc]
+			print(sinds)
 			for px in range(0,cpklen):
-				abcofpak = abcalc[px].get()
+				# abcofpak = abcalc[px].get()
+				abcofpak = abcalc[px][0]
 				for gtval in abcofpak:
 					indstr = "(" + str(adjadinknum) + ", " + str(gtval[1]) + ")"
 					gval = indstr + " -> " + gtval[0]
@@ -174,18 +180,18 @@ def newgadget_trace(vij_holomats1, vij_holomats2):
 	return gadgetval
 
 #>******************************************************************************
-def newgadget_abcoefs(coef_l1, abcoefs, xind,  stind):
+def newgadget_abcoefs(coef_l1, locabcoefs, xind,  stind):
 
 	gadgetvals 	= []
 	ijf = coef_l1.copy()
-	startind	= xind*len(abcoefs) + stind
+	startind	= xind*len(locabcoefs) + stind
 	div_factor	= -6
 
 	ev	= [1, -1, 1, 1, -1, 1]
 	rng6 = range(0,6)
 	rng3 = range(0,3)
-	for ind, abcoef in enumerate(abcoefs):
-		reali = startind + ind
+	for xab, abcoef in enumerate(locabcoefs):
+		reali = startind + xab
 		ijx = abcoef
 		gadgetval	= "0"
 		if all(ijf[i][0] == ijx[-i-1][0] for i in rng6):
@@ -221,7 +227,7 @@ def newgadget_abcoefs(coef_l1, abcoefs, xind,  stind):
 			# print("ijx", coef_l2[:2:-1])
 		else:
 			gadgetvals.append((gadgetval, reali))
-	return gadgetvals
+	return gadgetvals, (startind, len(locabcoefs))
 
 #>******************************************************************************
 def mpp_org_gadgetcalc(vij_holomat_list, abcoefs):
