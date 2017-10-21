@@ -52,7 +52,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 			complt	= []
 			cpacked = [ablist[i:i+nx] for i in range(ind + pak, lenablist, nx)]
 			cpklen 	= len(cpacked)
-			abcalc = [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi)) for xi in range(0,cpklen)]
+			abcalc = [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi, adjadinknum)) for xi in range(0,cpklen)]
 			for px in range(0,cpklen):
 				abcofpak = abcalc[px].get()
 				for gtval in abcofpak:
@@ -173,12 +173,12 @@ def newgadget_trace(vij_holomats1, vij_holomats2):
 	return gadgetval
 
 #>******************************************************************************
-def newgadget_abcoefs(coef_l1, abcoefs, xind):
+def newgadget_abcoefs(coef_l1, abcoefs, xind,  stind):
 
 	gadgetval	= 0
 	gadgetvals 	= []
 	ijf = coef_l1.copy()
-	startind	= xind*len(abcoefs)
+	startind	= xind*len(abcoefs) + stind
 	div_factor	= -6
 
 	ev	= [1, -1, 1, 1, -1, 1]
@@ -193,13 +193,13 @@ def newgadget_abcoefs(coef_l1, abcoefs, xind):
 			coefv = sum([(ijf[ix][2] * ijx[-ix-1][2])*(ev[ix]) for ix in rng6])
 			# gadgetval = coefv/div_factor
 			# print("NGadget AB:", int(coefv/(-2)))
-			gadgetvals.append((int(coefv/div_factor), reali))
+			gadgetvals.append((coefv/div_factor, reali))
 		elif any(ijf[i][0] == ijx[-i-1][0] for i in rng3):
 			for ix in rng3:
 				if (ijf[ix][0] == ijx[-ix-1][0]):
 					coefv = sum([ijf[ix][2] * ijx[5-ix][2] * ev[ix], ijf[5-ix][2] * ijx[ix][2] * ev[5-ix]])
 					# print("NGadget AB:", int(coefv/(-2)))
-					gadgetvals.append((int(coefv/div_factor), reali))
+					gadgetvals.append((coefv/div_factor, reali))
 			# print("ijf", coef_l1[0:3])
 			# print("ijx", coef_l2[:2:-1])
 		else:
