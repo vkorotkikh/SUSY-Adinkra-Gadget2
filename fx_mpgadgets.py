@@ -179,7 +179,7 @@ def newgadget_abcoefs(coef_l1, abcoefs, xind):
 	gadgetvals 	= []
 	ijf = coef_l1.copy()
 	startind	= xind*len(abcoefs)
-	div_factor	= -2
+	div_factor	= -6
 
 	ev	= [1, -1, 1, 1, -1, 1]
 	rng6 = range(0,6)
