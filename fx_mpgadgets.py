@@ -58,12 +58,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 				abcofpak = abcalc[px].get()
 				for gtval in abcofpak:
 					indstr = "(" + str(adjadinknum) + ", " + str(gtval[1]) + ")"
-					if gtval[0] == (1/3):
-						aval = "1/3"
-					elif gtval[0] == (-1/3)"
-						aval = "-1/3"
-
-					gval = indstr + " -> " + str(gtval[0])
+					gval = indstr + " -> " + gtval[0]
 					complt.append(gval)
 			# acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
 			acalc = "GadgetVal/Adinkra_" + str(adjadinknum) + ".txt"
@@ -181,7 +176,6 @@ def newgadget_trace(vij_holomats1, vij_holomats2):
 #>******************************************************************************
 def newgadget_abcoefs(coef_l1, abcoefs, xind,  stind):
 
-	gadgetval	= "0"
 	gadgetvals 	= []
 	ijf = coef_l1.copy()
 	startind	= xind*len(abcoefs) + stind
@@ -193,6 +187,7 @@ def newgadget_abcoefs(coef_l1, abcoefs, xind,  stind):
 	for ind, abcoef in enumerate(abcoefs):
 		reali = startind + ind
 		ijx = abcoef
+		gadgetval	= "0"
 		if all(ijf[i][0] == ijx[-i-1][0] for i in rng6):
 			# print("ijf", coef_l1)
 			# print("ijx", coef_l2[::-1])
