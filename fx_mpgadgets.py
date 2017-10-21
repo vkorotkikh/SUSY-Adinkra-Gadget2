@@ -26,7 +26,7 @@ def info(title):
 
 #>******************************************************************************
 # def org_gadgetcalc(vij_holomat_list, abcoefs):
-def mp_gadgetcalc_abonly(abcoef_list, numpaks=8):
+def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 	""" Do the new Gadget calc only for Alpha-Beta coefficients	"""
 	print("Executing ", __name__)
 	start_time = time.time()
@@ -59,7 +59,6 @@ def mp_gadgetcalc_abonly(abcoef_list, numpaks=8):
 					indstr = "(" + str(adjadinknum) + ", " + str(gtval[1]) + ")"
 					gval = indstr + " -> " + str(gtval[0])
 					complt.append(gval)
-
 			# acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
 			acalc = "GadgetVal/Adinkra_" + str(adjadinknum) + ".txt"
 			with open(acalc, 'w') as wfile:
