@@ -182,7 +182,7 @@ def newgadget_abcoefs(coef_l1, abcoefs, xind):
 	gadgetvals 	= []
 	ijf = coef_l1.copy()
 	startind	= xind*len(abcoefs)
-	# div_factor	= 2
+	div_factor	= -2
 
 	ev	= [1, -1, 1, 1, -1, 1]
 	rng6 = range(0,6)
@@ -196,13 +196,13 @@ def newgadget_abcoefs(coef_l1, abcoefs, xind):
 			coefv = sum([(ijf[ix][2] * ijx[-ix-1][2])*(ev[ix]) for ix in rng6])
 			# gadgetval = coefv/div_factor
 			# print("NGadget AB:", int(coefv/(-2)))
-			gadgetvals.append((int(coefv/(-2)), reali))
+			gadgetvals.append((int(coefv/div_factor), reali))
 		elif any(ijf[i][0] == ijx[-i-1][0] for i in rng3):
 			for ix in rng3:
 				if (ijf[ix][0] == ijx[-ix-1][0]):
 					coefv = sum([ijf[ix][2] * ijx[5-ix][2] * ev[ix], ijf[5-ix][2] * ijx[ix][2] * ev[5-ix]])
 					# print("NGadget AB:", int(coefv/(-2)))
-					gadgetvals.append((int(coefv/(-2)), reali))
+					gadgetvals.append((int(coefv/div_factor), reali))
 			# print("ijf", coef_l1[0:3])
 			# print("ijx", coef_l2[:2:-1])
 		else:
