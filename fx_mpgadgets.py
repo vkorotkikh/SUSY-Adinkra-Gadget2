@@ -184,7 +184,8 @@ def newgadget_abcoefs(coef_l1, locabcoefs, xind,  stind):
 
 	gadgetvals 	= []
 	ijf = coef_l1.copy()
-	startind	= xind*len(locabcoefs) + stind
+	# startind	= xind*len(locabcoefs) + stind
+	startind 	= xind * 576 + stind
 	div_factor	= -6
 
 	ev	= [1, -1, 1, 1, -1, 1]
