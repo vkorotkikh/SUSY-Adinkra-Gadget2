@@ -26,7 +26,7 @@ def info(title):
 
 #>******************************************************************************
 # def org_gadgetcalc(vij_holomat_list, abcoefs):
-def mp_gadgetcalc_abonly(abcoef_list, numpaks=4):
+def mp_gadgetcalc_abonly(abcoef_list, numpaks=8):
 	""" Do the new Gadget calc only for Alpha-Beta coefficients	"""
 	print("Executing ", __name__)
 	start_time = time.time()
@@ -174,7 +174,7 @@ def newgadget_trace(vij_holomats1, vij_holomats2):
 	return gadgetval
 
 #>******************************************************************************
-def newgadget_abcoefs(coef_l1, abcoefs, adind):
+def newgadget_abcoefs(coef_l1, abcoefs, xind):
 
 	gadgetval	= 0
 	gadgetvals 	= []
@@ -204,7 +204,7 @@ def newgadget_abcoefs(coef_l1, abcoefs, adind):
 			# print("ijx", coef_l2[:2:-1])
 		else:
 			gadgetvals.append(0)
-	return gadgetvals
+	return gadgetvals, xind
 
 #>******************************************************************************
 def mpp_org_gadgetcalc(vij_holomat_list, abcoefs):
