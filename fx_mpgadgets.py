@@ -185,7 +185,7 @@ def newgadget_abcoefs(coef_l1, abcoefs, adind):
 	ev	= [1, -1, 1, 1, -1, 1]
 	rng6 = range(0,6)
 	rng3 = range(0,3)
-	for abcoef in abcoefs:
+	for ind, abcoef in enumerate(abcoefs):
 		ijx = abcoef
 		if all(ijf[i][0] == ijx[-i-1][0] for i in rng6):
 			# print("ijf", coef_l1)

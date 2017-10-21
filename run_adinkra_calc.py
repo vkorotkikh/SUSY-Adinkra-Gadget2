@@ -50,7 +50,6 @@ def main():
 		# fx_mpgadgets.mporg_gadgetcalc(vijmat_list, abcoef_list)
 		fx_mpgadgets.mp_gadgetcalc_abonly(abcoef_list)
 		# fx_gadgets.org_gadgetcalc(vijmat_list, abcoef_list,ultra_fermi)
-
 		# NewAdink.exe_fermiorder()
 
 #>******************************************************************************
