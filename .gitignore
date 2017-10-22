@@ -1,5 +1,6 @@
 __pycache__/
 test*.txt
+gval*.txt
 GadgetVal/*
 Adinkra_*
 *.tar.gz

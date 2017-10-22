@@ -44,12 +44,10 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		# print("Length ab ", len(abcoefpak))
 		check_or_makedir("GadgetVal")
 		print("Pack/Slice: ", pak, ":", islice)
-		if not ix == 7:
+		if ix >= 4:
 			continue
-			# sys.exit("Halfway point")
-		for ind in range(0,paksize):
-			# if ix == 0:
-			# 	continue
+		# for ind in range(0,paksize):
+		for ind in range(0, numpaks)
 			adjadinknum = ind + pak
 			print("Adinkra:", adjadinknum)
 			icof	= abcoefpak[ind]
@@ -73,6 +71,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 				# wfile.write("Adinkra: %s \n" % ind)
 				for cval in complt:
 					wfile.write("%s \n" % cval)
+		ixpak_dirname = "GadgetVal" + str(ix+1) + "of8"
 
 	tval = time.time() - start_time
 	print("-- Execution time --")
