@@ -7,7 +7,7 @@
 # ******************************************************************************
 
 # Library Imports
-import os, sys, time, itertools
+import os, sys, time, itertools, shutil
 import numpy as np
 # Specific imports -< FOR DEV >-
 import logging
@@ -42,7 +42,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		islice = pak + paksize
 		abcoefpak 	= ablist[pak:islice]
 		# print("Length ab ", len(abcoefpak))
-		check_or_makedir("GadgetVal")
+		mkpath = check_or_makedir("GadgetVal")
 		print("Pack/Slice: ", pak, ":", islice)
 		if ix >= 4:
 			continue
@@ -71,7 +71,12 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 				# wfile.write("Adinkra: %s \n" % ind)
 				for cval in complt:
 					wfile.write("%s \n" % cval)
-		ixpak_dirname = "GadgetVal" + str(ix+1) + "of8"
+		cwdpath		= os.path.basename(mkpath)
+		ixdir_name	= "GadgetVal" + str(ix+1) + "of8"
+		fpath_ixdir	= os.path.join(runad_dirpath, ixdir_name)
+		if not os.path.isdir(fpath_ixdir):
+			# shutil.move(src, dst)
+			shutil.move(src, totpath)
 
 	tval = time.time() - start_time
 	print("-- Execution time --")
@@ -148,6 +153,7 @@ def check_or_makedir(dirname, dirpath=''):
 	chkdirpath = runad_dirpath + "/" + dirname
 	if not os.path.isdir(chkdirpath):
 		os.makedirs(chkdirpath)
+		return runad_dirpath
 	else:
 		pass
 
