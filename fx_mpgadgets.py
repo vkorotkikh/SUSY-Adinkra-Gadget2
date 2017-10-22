@@ -42,9 +42,11 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		islice = pak + paksize
 		abcoefpak 	= ablist[pak:islice]
 		# print("Length ab ", len(abcoefpak))
+		start_pakt = time.time()
 		mkpath = check_or_makedir("GadgetVal")
 		print("Pack/Slice: ", pak, ":", islice)
 		if ix >= 4:
+		# if not ix == 7:
 			continue
 		# for ind in range(0,paksize):
 		for ind in range(0, numpaks):
@@ -72,6 +74,14 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 				for cval in complt:
 					wfile.write("%s \n" % cval)
 		# cwdpath		= os.path.basename(mkpath)
+		calcrestxt 	= "GadgetVal/gvalstats" + str(ix+1) + "of8.txt"
+		pakctime	= time.time() - start_pakt
+		adinpermin 	= int(paksize/(pakctime/60))
+		with open(calcrestxt, 'w') as wres:
+			wres.write(("Adinkra Slice: " + str(pak) + " : " + str(islice) + "\n"))
+			wres.write("-- Execution time --\n")
+			wres.write(("--" +str(pakctime) + "seconds --\n"))
+			wres.write(("--" + str(adinpermin) + "Adinkras / minute --\n"))
 		ixdir_name	= "GadgetVal" + str(ix+1) + "of8"
 		resfiles_p	= os.path.join(mkpath, 'GadgetVal')
 		fpath_ixdir	= os.path.join(mkpath, ixdir_name)
