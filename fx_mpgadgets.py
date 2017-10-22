@@ -39,15 +39,16 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 	pool 	= mp.Pool(processes=64)
 	paksize = int(lenablist/numpaks)	# Splitting 36k A into n sets of len paksize
 	indpaks	= [paksize*n for n in range(0,numpaks)]
-
+	# indpaks[0] = 2000
 	for ix, pak in enumerate(indpaks): # for ix 0-7, pak 0-32256, steps 4608
 		islice = pak + paksize
 		abcoefpak 	= ablist[pak:islice]
 		# print("Length ab ", len(abcoefpak))
 		print("Pack/Slice: ", pak, ":", islice)
+
 		for ind in range(0,paksize):
-			if ind == int(lenablist/2):
-				exit()
+			if ix == 0 and ind < 4000:
+				continue
 			adjadinknum = ind + pak
 			print("Adinkra:", adjadinknum)
 			icof	= abcoefpak[ind]
@@ -57,8 +58,8 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 			cpacked.append(ablist[rngval[-1]:])
 			cpklen 	= len(cpacked)
 			abcalc 	= [pool.apply(newgadget_abcoefs, args=(icof, cpacked[xi],xi, adjadinknum)) for xi in range(0,cpklen)]
-			sinds	= [x[1] for x in abcalc]
-			print(sinds)
+			# sinds	= [x[1] for x in abcalc]
+			# print(sinds)
 			for px in range(0,cpklen):
 				# abcofpak = abcalc[px].get()
 				abcofpak = abcalc[px][0]
