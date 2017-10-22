@@ -2,3 +2,4 @@ __pycache__/
 test*.txt
 GadgetVal/*
 Adinkra_*
+*.tar.gz
