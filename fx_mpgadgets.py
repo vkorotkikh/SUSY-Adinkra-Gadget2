@@ -13,8 +13,6 @@ import numpy as np
 import logging
 import multiprocessing as mp
 
-import adinkra_nxn_constructor
-
 #>******************************************************************************
 def info(title):
 	print(title)
@@ -45,11 +43,10 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		start_pakt = time.time()
 		mkpath = check_or_makedir("GadgetVal")
 		print("Pack/Slice: ", pak, ":", islice)
-		if ix >= 4:
-		# if not ix == 7:
+		if ix =< 1 and ix >= 4:
+		# if not ix == 1:
 			continue
-		# for ind in range(0,paksize):
-		for ind in range(0, numpaks):
+		for ind in range(0,paksize):
 			adjadinknum = ind + pak
 			print("Adinkra:", adjadinknum)
 			icof	= abcoefpak[ind]
@@ -169,7 +166,7 @@ def check_or_makedir(dirname, dirpath=''):
 		return runad_dirpath
 
 #>******************************************************************************
-def newgadget_mtraces(vij_holomat, vij_holomats, adind):
+def newgadget_mtraces(vij_holomat, vij_holomats_list, adind):
 	""" Calculate the new Gadget equation
 		G(a,a') = (1/N)eps^(IJKL)*Tr[V(a)IJ, V(a')KL]
 		vij_holomat = One of the vij matrices, each 4x4 np.array
@@ -181,8 +178,8 @@ def newgadget_mtraces(vij_holomat, vij_holomats, adind):
 	gadgetvals = []
 	ev	= [1, -1, 1, 1, -1, 1]
 	vh = vij_holomat
-	vhs = vij_holomats
-	for iv in vij_holomats:
+	# vhs = vij_holomats_list
+	for iv in vij_holomats_list:
 		somev = [np.multiply(np.dot(vh[i],iv[-i-1]),ev[i]) for i in range(0,len(ev))]
 		trvals = [np.trace(vx) for vx in somev]
 		gadgetval = int(sum(trvals)/(8))
