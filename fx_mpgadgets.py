@@ -79,9 +79,9 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		adinpermin 	= int(paksize/(pakctime/60))
 		with open(calcrestxt, 'w') as wres:
 			wres.write(("Adinkra Slice: " + str(pak) + " : " + str(islice) + "\n"))
-			wres.write("-- Execution time --\n")
-			wres.write(("--" +str(pakctime) + "seconds --\n"))
-			wres.write(("--" + str(adinpermin) + "Adinkras / minute --\n"))
+			wres.write("---- Execution time ----\n")
+			wres.write(("-- " +str(pakctime) + " seconds --\n"))
+			wres.write(("-- " + str(adinpermin) + " Adinkras / minute --\n"))
 		ixdir_name	= "GadgetVal" + str(ix+1) + "of8"
 		resfiles_p	= os.path.join(mkpath, 'GadgetVal')
 		fpath_ixdir	= os.path.join(mkpath, ixdir_name)
