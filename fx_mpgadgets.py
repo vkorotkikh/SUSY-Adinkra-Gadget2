@@ -43,8 +43,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		start_pakt = time.time()
 		mkpath = check_or_makedir("GadgetVal")
 		print("Pack/Slice: ", pak, ":", islice)
-		if ix =< 1 and ix >= 4:
-		# if not ix == 1:
+		if not ix == 2 or not ix == 3:
 			continue
 		for ind in range(0,paksize):
 			adjadinknum = ind + pak
