@@ -42,11 +42,11 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		islice = pak + paksize
 		abcoefpak 	= ablist[pak:islice]
 		# print("Length ab ", len(abcoefpak))
+		check_or_makedir("GadgetVal")
 		print("Pack/Slice: ", pak, ":", islice)
 		if not ix == 7:
 			continue
 			# sys.exit("Halfway point")
-
 		for ind in range(0,paksize):
 			# if ix == 0:
 			# 	continue
@@ -73,6 +73,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 				# wfile.write("Adinkra: %s \n" % ind)
 				for cval in complt:
 					wfile.write("%s \n" % cval)
+
 	tval = time.time() - start_time
 	print("-- Execution time --")
 	print("---- %s seconds ----" % tval)
@@ -135,6 +136,21 @@ def mp_gadgetcalc_abtr(vij_holomat_list, abcoefs):
 	print("-- Execution time --")
 	print("---- %s seconds ----" % (time.time() - start_time))
 
+#>******************************************************************************
+def check_or_makedir(dirname, dirpath=''):
+	print("Dirpath: ", dirpath)
+	runad_fullpath = os.path.realpath(__file__)
+	runad_dirpath  = os.path.dirname(runad_fullpath)
+	if dirpath != '' and dirpath == runad_dirpath:
+		pass
+	elif dirpath != '':
+		runad_dirpath = dirpath
+	# print("dirname :", runad_dirpath)
+	chkdirpath = runad_dirpath + "/" + dirname
+	if not os.path.isdir(chkdirpath):
+		os.makedirs(chkdirpath)
+	else:
+		pass
 
 #>******************************************************************************
 def newgadget_mtraces(vij_holomat, vij_holomats, adind):
