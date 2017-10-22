@@ -43,7 +43,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		abcoefpak 	= ablist[pak:islice]
 		# print("Length ab ", len(abcoefpak))
 		print("Pack/Slice: ", pak, ":", islice)
-		if not ix == 4:
+		if not ix == 7:
 			continue
 			# sys.exit("Halfway point")
 
@@ -73,9 +73,10 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 				# wfile.write("Adinkra: %s \n" % ind)
 				for cval in complt:
 					wfile.write("%s \n" % cval)
-
+	tval = time.time() - start_time
 	print("-- Execution time --")
-	print("---- %s seconds ----" % (time.time() - start_time))
+	print("---- %s seconds ----" % tval)
+	print("---- %s Adinkras / minute ----" % int(paksize/(tval/60)))
 
 #>******************************************************************************
 # def org_gadgetcalc(vij_holomat_list, abcoefs):
