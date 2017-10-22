@@ -46,7 +46,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		# print("Length ab ", len(abcoefpak))
 		print("Pack/Slice: ", pak, ":", islice)
 		for ind in range(0,paksize):
-			if ind == 251:
+			if ind == 580:
 				exit()
 			adjadinknum = ind + pak
 			print("Adinkra:", adjadinknum)
