@@ -47,7 +47,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		if ix >= 4:
 			continue
 		# for ind in range(0,paksize):
-		for ind in range(0, numpaks)
+		for ind in range(0, numpaks):
 			adjadinknum = ind + pak
 			print("Adinkra:", adjadinknum)
 			icof	= abcoefpak[ind]
@@ -71,12 +71,13 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 				# wfile.write("Adinkra: %s \n" % ind)
 				for cval in complt:
 					wfile.write("%s \n" % cval)
-		cwdpath		= os.path.basename(mkpath)
+		# cwdpath		= os.path.basename(mkpath)
 		ixdir_name	= "GadgetVal" + str(ix+1) + "of8"
-		fpath_ixdir	= os.path.join(runad_dirpath, ixdir_name)
+		resfiles_p	= os.path.join(mkpath, 'GadgetVal')
+		fpath_ixdir	= os.path.join(mkpath, ixdir_name)
 		if not os.path.isdir(fpath_ixdir):
 			# shutil.move(src, dst)
-			shutil.move(src, totpath)
+			shutil.move(resfiles_p, fpath_ixdir)
 
 	tval = time.time() - start_time
 	print("-- Execution time --")
@@ -155,7 +156,7 @@ def check_or_makedir(dirname, dirpath=''):
 		os.makedirs(chkdirpath)
 		return runad_dirpath
 	else:
-		pass
+		return runad_dirpath
 
 #>******************************************************************************
 def newgadget_mtraces(vij_holomat, vij_holomats, adind):
