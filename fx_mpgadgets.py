@@ -46,7 +46,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		# print("Length ab ", len(abcoefpak))
 		print("Pack/Slice: ", pak, ":", islice)
 		for ind in range(0,paksize):
-			if ind == 2:
+			if ind == 251:
 				exit()
 			adjadinknum = ind + pak
 			print("Adinkra:", adjadinknum)
@@ -69,7 +69,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 			# acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
 			acalc = "GadgetVal/Adinkra_" + str(adjadinknum) + ".txt"
 			with open(acalc, 'w') as wfile:
-				wfile.write("Adinkra: %s \n" % ind)
+				# wfile.write("Adinkra: %s \n" % ind)
 				for cval in complt:
 					wfile.write("%s \n" % cval)
 
