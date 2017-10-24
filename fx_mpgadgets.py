@@ -288,35 +288,3 @@ def mpp_org_gadgetcalc(vij_holomat_list, abcoefs):
 			# print(len(somex))
 		# acalc = "Adinkra_" + str(ind+1) + "_Gadgets.txt"
 		# with open(acalc, 'w') as rf:
-
-
-#>******************************************************************************
-def rand_string(length, output):
-	info('function rand_string')
-	rand_str = ''.join(random.choice(string.ascii_lowercase + string.ascii_uppercase
-									+ string.digits) for i in range(length))
-	output.put(rand_str)
-
-#>******************************************************************************
-def test_mpp():
-	random.seed(123)
-	# output Queue
-	output = mp.Queue()
-	processes = [mp.Process(target=rand_string, args=(5, output)) for x in range(4)]
-
-	# Run the processes, starting sequentially
-	for pt in processes:
-		pt.start()
-	# Exit the completed processes
-	for pt in processes:
-		pt.join()
-
-	resutstr = [output.get() for p in processes]
-	print(resutstr)
-
-if __name__ == "__main__":
-	# test_mpp()
-	start_time = time.time()
-	test_mpp()
-	print("-- Execution time --")
-	print("---- %s seconds ----" % (time.time() - start_time))
