@@ -29,13 +29,9 @@ def main(gvalpath1="", gvalpath2=""):
 			pass
 		else:
 			sys.exit("DIRECTORY DNE")
-			# pass
 
 	gval_list1 = []
 	gval_list2 = []
-
-	# gval_list1 = parse_gadgetvals(gvalpath1)
-	# print("Size", sys.getsizeof(gval_list1)/1024)
 
 	for ix, pak in enumerate(indpaks):
 		if ix >= 6:
@@ -92,7 +88,7 @@ def parse_lgadgetvals(gvalpath, minnum=0, maxnum=4608, fst = ""):
 	gfilend	= ".txt"
 	maxline	= 26
 	act_filecnt	= 0
-	
+
 	for ix in frange:
 		valfile	= gvalpath + "/" + fst + str(ix) + ".txt"
 		gval_dict	= {}
