@@ -9,7 +9,7 @@
 # ******************************************************************************
 
 # Library Imports
-import sys, time, os
+import os, sys, time
 import numpy as np
 
 # Function Imports
@@ -36,9 +36,7 @@ def main():
 	adinkra_list	= []
 	adinkra_list	= adinkra_nxn_constructor.create_adinkras(4,4)
 
-	cwdpath	= os.getcwd()
-	check_or_makedir("GadgetVal", cwdpath)
-	# vij_holoraumy_calc.calc_vij_matrices(adinkra_list)
+	# check_or_makedir("GadgetVal", '')
 	if len(adinkra_list) == 36864:
 		NewAdink = cls_adinkra_set.AdinkraSet(4,4,adinkra_list)
 		NewAdink.exe_fermiorder()
@@ -54,15 +52,18 @@ def main():
 
 #>******************************************************************************
 def check_or_makedir(dirname, dirpath=''):
-	print("Dirpath: ", dirpath)
+
 	runad_fullpath = os.path.realpath(__file__)
 	runad_dirpath  = os.path.dirname(runad_fullpath)
 	if dirpath != '' and dirpath == runad_dirpath:
 		pass
 	elif dirpath != '':
 		runad_dirpath = dirpath
+	elif dirpath == '':
+		pass
 	# print("dirname :", runad_dirpath)
 	chkdirpath = runad_dirpath + "/" + dirname
+	print("Does this directory exist: ", chkdirpath)
 	if not os.path.isdir(chkdirpath):
 		os.makedirs(chkdirpath)
 	else:
