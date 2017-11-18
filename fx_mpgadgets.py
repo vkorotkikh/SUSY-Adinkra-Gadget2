@@ -24,7 +24,10 @@ def info(title):
 #>******************************************************************************
 # def org_gadgetcalc(vij_holomat_list, abcoefs):
 def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
-	""" Do the new Gadget calc only for Alpha-Beta coefficients	"""
+	""" Performs New Gadget calculation using only the Alpha-Beta coefficients
+		Uses multiprocessing module in splitting up the Gadget calc. into
+		packs of 64.
+	"""
 	print("Executing ", __name__)
 	start_time = time.time()
 	lenablist = len(abcoef_list)
@@ -42,10 +45,11 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		# print("Length ab ", len(abcoefpak))
 		start_pakt = time.time()
 		print("Pack/Slice: ", pak, ":", islice)
-		# if ix < 2 or ix > 3:
-		# 	continue
+
 		for ind in range(0,paksize):
 			adjadinknum = ind + pak
+			adjanumstr	= str(adjadinknum)
+			cprintstr1	= "(" + adjanumstr + ", "
 			print("Adinkra:", adjadinknum)
 			icof	= abcoefpak[ind]
 			complt	= []
@@ -59,11 +63,12 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 				abcofpak = abcalc[px].get()
 				# abcofpak = abcalc[px][0]
 				for gtval in abcofpak:
-					indstr = "(" + str(adjadinknum) + ", " + str(gtval[1]) + ")"
+					# indstr = "(" + str(adjadinknum) + ", " + str(gtval[1]) + ")"
+					indstr = cprintstr1 + str(gtval[1]) + ")"
 					gval = indstr + " -> " + gtval[0]
 					complt.append(gval)
-			# acalc = "GadgetVal/Adinkra_" + str(ind+islice) + "_GnewVal.txt"
-			acalc = "GadgetVal/Adinkra_" + str(adjadinknum) + ".txt"
+			# acalc = "GadgetVal/Adinkra_" + str(adjadinknum) + ".txt"
+			acalc = "GadgetVal/Adinkra_" + adjanumstr + ".txt"
 			with open(acalc, 'w') as wfile:
 				# wfile.write("Adinkra: %s \n" % ind)
 				for cval in complt:
