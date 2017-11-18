@@ -34,8 +34,8 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 	ablist = abcoef_list[:]
 
 	numpaks	= 8	# Number of calculation packs
-	nx		= int(lenablist/64)
-	pool 	= mp.Pool(processes=64)
+	nx		= int(lenablist/mpcount)
+	pool 	= mp.Pool(processes=mpcount)
 	paksize = int(lenablist/numpaks)	# Splitting 36k A into n sets of len paksize
 	indpaks	= [paksize*n for n in range(0,numpaks)]
 
@@ -47,27 +47,27 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		print("Pack/Slice: ", pak, ":", islice)
 
 		for ind in range(0,paksize):
-			adjadinknum = ind + pak
-			adjanumstr	= str(adjadinknum)
+			adjnum = ind + pak
+			adjanumstr	= str(adjnum)
 			cprintstr1	= "(" + adjanumstr + ", "
-			print("Adinkra:", adjadinknum)
+			print("Adinkra:", adjnum)
 			icof	= abcoefpak[ind]
 			complt	= []
-			rngval 	= list(range(adjadinknum, lenablist, nx))
+			rngval 	= list(range(adjnum, lenablist, nx))
 			cpacked = [ablist[i:i+nx] for i in rngval if (i+nx) < lenablist]
 			cpacked.append(ablist[rngval[-1]:])
 			cpklen 	= len(cpacked)
-			# abcalc 	= [pool.apply(newgadget_abcoefs, args=(icof, cpacked[xi],xi, adjadinknum)) for xi in range(0,cpklen)]
-			abcalc 	= [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi, adjadinknum)) for xi in range(0,cpklen)]
+			# abcalc 	= [pool.apply(newgadget_abcoefs, args=(icof, cpacked[xi],xi, adjnum)) for xi in range(0,cpklen)]
+			abcalc 	= [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi, adjnum)) for xi in range(0,cpklen)]
 			for px in range(0,cpklen):
 				abcofpak = abcalc[px].get()
 				# abcofpak = abcalc[px][0]
 				for gtval in abcofpak:
-					# indstr = "(" + str(adjadinknum) + ", " + str(gtval[1]) + ")"
+					# indstr = "(" + str(adjnum) + ", " + str(gtval[1]) + ")"
 					indstr = cprintstr1 + str(gtval[1]) + ") -> "
 					gval = indstr + gtval[0]
 					complt.append(gval)
-			# acalc = "GadgetVal/Adinkra_" + str(adjadinknum) + ".txt"
+			# acalc = "GadgetVal/Adinkra_" + str(adjnum) + ".txt"
 			acalc = "GadgetVal/Adinkra_" + adjanumstr + ".txt"
 			with open(acalc, 'w') as wfile:
 				for cval in complt:
@@ -85,7 +85,6 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		resfiles_p	= os.path.join(mkpath, 'GadgetVal')
 		fpath_ixdir	= os.path.join(mkpath, ixdir_name)
 		if not os.path.isdir(fpath_ixdir):
-			# shutil.move(src, dst)
 			shutil.move(resfiles_p, fpath_ixdir)
 
 	tval = time.time() - start_time
