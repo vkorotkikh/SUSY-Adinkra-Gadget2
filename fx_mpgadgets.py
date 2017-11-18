@@ -64,13 +64,12 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 				# abcofpak = abcalc[px][0]
 				for gtval in abcofpak:
 					# indstr = "(" + str(adjadinknum) + ", " + str(gtval[1]) + ")"
-					indstr = cprintstr1 + str(gtval[1]) + ")"
-					gval = indstr + " -> " + gtval[0]
+					indstr = cprintstr1 + str(gtval[1]) + ") -> "
+					gval = indstr + gtval[0]
 					complt.append(gval)
 			# acalc = "GadgetVal/Adinkra_" + str(adjadinknum) + ".txt"
 			acalc = "GadgetVal/Adinkra_" + adjanumstr + ".txt"
 			with open(acalc, 'w') as wfile:
-				# wfile.write("Adinkra: %s \n" % ind)
 				for cval in complt:
 					wfile.write("%s \n" % cval)
 		# cwdpath		= os.path.basename(mkpath)
@@ -97,6 +96,9 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 #>******************************************************************************
 # def org_gadgetcalc(vij_holomat_list, abcoefs):
 def mp_gadgetcalc_abtr(vij_holomat_list, abcoefs):
+	""" Performs new Gadget calculation using both the Trace method and
+		Alpha-Beta coefficient method
+	"""
 	print("Executing ", __name__)
 	start_time = time.time()
 
