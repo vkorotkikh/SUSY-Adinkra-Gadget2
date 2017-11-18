@@ -41,7 +41,6 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 		abcoefpak 	= ablist[pak:islice]
 		# print("Length ab ", len(abcoefpak))
 		start_pakt = time.time()
-		mkpath = check_or_makedir("GadgetVal")
 		print("Pack/Slice: ", pak, ":", islice)
 		# if ix < 2 or ix > 3:
 		# 	continue

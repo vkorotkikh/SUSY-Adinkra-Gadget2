@@ -10,8 +10,8 @@
 # ******************************************************************************
 
 # Library Imports
-import sys, time, itertools
-from array import array		# going to try and use this
+import time, itertools
+# from array import array		# going to try and use this
 from numpy.linalg import inv
 import numpy as np
 

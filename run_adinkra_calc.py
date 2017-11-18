@@ -36,16 +36,15 @@ def main():
 	adinkra_list	= []
 	adinkra_list	= adinkra_nxn_constructor.create_adinkras(4,4)
 
-	# check_or_makedir("GadgetVal", '')
 	if len(adinkra_list) == 36864:
 		NewAdink = cls_adinkra_set.AdinkraSet(4,4,adinkra_list)
 		NewAdink.exe_fermiorder()
-		print("Executing New Gadget calc")
 		vijmat_list = NewAdink.ret_fermiholo()
 		abcoef_list = NewAdink.ret_fermi_abcoef()
 		# ultra_fermi = NewAdink.ret_ultrafermi()
 
-		# fx_mpgadgets.mporg_gadgetcalc(vijmat_list, abcoef_list)
+		sys.exit()
+		print("Executing New Gadget calc")
 		fx_mpgadgets.mp_gadgetcalc_abonly(abcoef_list)
 		# fx_gadgets.org_gadgetcalc(vijmat_list, abcoef_list,ultra_fermi)
 		# NewAdink.exe_fermiorder()
@@ -55,7 +54,7 @@ def check_or_makedir(dirname, dirpath=''):
 
 	runad_fullpath = os.path.realpath(__file__)
 	runad_dirpath  = os.path.dirname(runad_fullpath)
-	if dirpath != '' and dirpath == runad_dirpath:
+	if dirpath == runad_dirpath:
 		pass
 	elif dirpath != '':
 		runad_dirpath = dirpath
