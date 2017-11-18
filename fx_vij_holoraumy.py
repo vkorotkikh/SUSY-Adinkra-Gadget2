@@ -15,7 +15,6 @@ import numpy as np
 
 #>******************************************************************************
 def alphas_betas():
-
 	""" These are the alpha and beta matrices multiplied by 2i
 		alpha and beta are tensor products of Pauli spin matrices
  		Identity matrix They are defined in equtions (4.5)
@@ -38,6 +37,11 @@ def alphas_betas():
 
 #>******************************************************************************
 def calc_fermi_vij(adinkra_list):
+	""" Calculates the (6) Fermionic Holoraumy matrices for each Adinkra in the
+		adinkra_list.
+		adinkra_list - list containing n lists - each nested list contains 6 tuples
+		( int value - L matrix index, 4x4 np.array - L matrix)
+	"""
 
 	loc_adinkras = []
 	if not isinstance(adinkra_list, list):
@@ -47,7 +51,7 @@ def calc_fermi_vij(adinkra_list):
 		loc_adinkras = adinkra_list
 		# pass
 
-	""" Store Fermionic Holoraumy matrices """
+	''' Store Fermionic Holoraumy matrices '''
 	vij_fermi	= []
 	ij_inds		= list(itertools.combinations([0,1,2,3], 2))
 	for idink in loc_adinkras:
@@ -67,6 +71,11 @@ def calc_fermi_vij(adinkra_list):
 
 #>******************************************************************************
 def calc_ultrafermi_vij(adinkra_list):
+	""" Calculates the (6) Fermionic Holoraumy matrices for each Adinkra in the
+		adinkra_list.
+		adinkra_list - list containing n lists - each nested list contains 6 tuples
+		( int value - L matrix index, 4x4 np.array - L matrix)
+	"""
 
 	loc_adinkras = []
 	if not isinstance(adinkra_list, list):
