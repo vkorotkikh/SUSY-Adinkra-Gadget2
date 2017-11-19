@@ -7,11 +7,9 @@
 #
 # ******************************************************************************
 
-
 # Library Imports
 import itertools
 import numpy as np
-
 
 #>******************************************************************************
 def alphas_betas():
@@ -20,7 +18,7 @@ def alphas_betas():
  		Identity matrix They are defined in equtions (4.5)
 		in Isaac Chappell II, S. James Gates, Jr - 2012
 	"""
-
+	# Alphas
 	alpha1i = np.matrix([[0, 0, 0, 2], [0, 0, 2, 0], [0, -2, 0, 0], [-2, 0, 0, 0]])
 	alpha2i = np.matrix([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, 2], [0, 0, -2, 0]])
 	alpha3i = np.matrix([[0, 0, 2, 0], [0, 0, 0, -2], [-2, 0, 0, 0], [0, 2, 0, 0]])
@@ -31,7 +29,6 @@ def alphas_betas():
 	beta3i = np.matrix([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, -2], [0, 0, 2, 0]])
 
 	tlist = [alpha1i, alpha2i, alpha3i, beta1i, beta2i, beta3i]
-	# factor_2list = [np.divide(x,2) for x in tlist]
 	return tlist
 
 
@@ -72,7 +69,7 @@ def calc_fermi_vij(adinkra_list):
 #>******************************************************************************
 def calc_ultrafermi_vij(adinkra_list):
 	""" Calculates the 24 Fermionic Holoraumy matrices for each Adinkra in the
-		adinkra_list.
+		adinkra_list. Not coded to handle more than that.
 		adinkra_list - list containing n lists - each nested list contains 6 tuples
 		( int value - L matrix index, 4x4 np.array - L matrix)
 	"""
@@ -85,7 +82,7 @@ def calc_ultrafermi_vij(adinkra_list):
 		loc_adinkras = adinkra_list
 
 	vij_ultrafermi	= []
-	ij_inds = list(itertools.permutations([0,1,2,3], 2)) #  24 possible ij
+	ij_inds = list(itertools.permutations([0,1,2,3], 2)) #  24 possible permutations
 	for idink in loc_adinkras:
 		temp_dozen = []
 		for ijtup in ij_inds:
@@ -93,8 +90,7 @@ def calc_ultrafermi_vij(adinkra_list):
 			ljmat 		= idink[ijtup[1]][1]
 			rimat		= np.transpose(limat)
 			rjmat		= np.transpose(ljmat)
-			""" Vij eq from 1601.00 (3.2) """
-			""" Probably needs 1/2	"""
+			""" Vij eq from 1601.00 (3.2) - has the 1/2 factor"""
 			holo_mat	= np.divide((np.dot(rimat, ljmat) - np.dot(rjmat, limat)),2)
 			temp_dozen.append(holo_mat)
 		vij_ultrafermi.append(temp_dozen)
