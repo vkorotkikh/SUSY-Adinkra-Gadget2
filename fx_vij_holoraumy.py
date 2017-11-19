@@ -71,7 +71,7 @@ def calc_fermi_vij(adinkra_list):
 
 #>******************************************************************************
 def calc_ultrafermi_vij(adinkra_list):
-	""" Calculates the (6) Fermionic Holoraumy matrices for each Adinkra in the
+	""" Calculates the 24 Fermionic Holoraumy matrices for each Adinkra in the
 		adinkra_list.
 		adinkra_list - list containing n lists - each nested list contains 6 tuples
 		( int value - L matrix index, 4x4 np.array - L matrix)
@@ -85,7 +85,7 @@ def calc_ultrafermi_vij(adinkra_list):
 		loc_adinkras = adinkra_list
 
 	vij_ultrafermi	= []
-	ij_inds = list(itertools.permutations([0,1,2,3], 2))
+	ij_inds = list(itertools.permutations([0,1,2,3], 2)) #  24 possible ij
 	for idink in loc_adinkras:
 		temp_dozen = []
 		for ijtup in ij_inds:
@@ -105,9 +105,14 @@ def calc_ultrafermi_vij(adinkra_list):
 def fermionic_holomats(adinkra):
 	return calc_fermi_vij(adinkra)
 
+
 # ******************************************************************************
 def bosonic_holomats(adinkra_list):
-	""" Calculating Bosonic holoraumy matrices for given Adinkra """
+	""" Calculates the (6) Bosonic Holoraumy matrices for each Adinkra in the
+		adinkra_list.
+		adinkra_list - list containing n lists - each nested list contains 6 tuples
+		( int value - L matrix index, 4x4 np.array - L matrix)
+	"""
 	loc_adinkras = []
 	if not isinstance(tetrad_list, list):
 		loc_adinkras = [adinkra_list]
