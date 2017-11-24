@@ -18,15 +18,17 @@ def alphas_betas():
  		Identity matrix They are defined in equtions (4.5)
 		in Isaac Chappell II, S. James Gates, Jr - 2012
 	"""
+	# Redoing the matrices with np.array
 	# Alphas
-	alpha1i = np.matrix([[0, 0, 0, 2], [0, 0, 2, 0], [0, -2, 0, 0], [-2, 0, 0, 0]])
-	alpha2i = np.matrix([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, 2], [0, 0, -2, 0]])
-	alpha3i = np.matrix([[0, 0, 2, 0], [0, 0, 0, -2], [-2, 0, 0, 0], [0, 2, 0, 0]])
+	# alpha1i = np.matrix([[0, 0, 0, 2], [0, 0, 2, 0], [0, -2, 0, 0], [-2, 0, 0, 0]])
+	alpha1i	= np.array([[0, 0, 0, 2], [0, 0, 2, 0], [0, -2, 0, 0], [-2, 0, 0, 0]])
+	alpha2i = np.array([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, 2], [0, 0, -2, 0]])
+	alpha3i = np.array([[0, 0, 2, 0], [0, 0, 0, -2], [-2, 0, 0, 0], [0, 2, 0, 0]])
 
 	# Betas
-	beta1i = np.matrix([[0, 0, 0, 2], [0, 0, -2, 0], [0, 2, 0, 0], [-2, 0, 0, 0]])
-	beta2i = np.matrix([[0, 0, 2, 0], [0, 0, 0, 2], [-2, 0, 0, 0], [0, -2, 0, 0]])
-	beta3i = np.matrix([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, -2], [0, 0, 2, 0]])
+	beta1i = np.array([[0, 0, 0, 2], [0, 0, -2, 0], [0, 2, 0, 0], [-2, 0, 0, 0]])
+	beta2i = np.array([[0, 0, 2, 0], [0, 0, 0, 2], [-2, 0, 0, 0], [0, -2, 0, 0]])
+	beta3i = np.array([[0, 2, 0, 0], [-2, 0, 0, 0], [0, 0, 0, -2], [0, 0, 2, 0]])
 
 	tlist = [alpha1i, alpha2i, alpha3i, beta1i, beta2i, beta3i]
 	return tlist
@@ -114,7 +116,7 @@ def bosonic_holomats(adinkra_list):
 		loc_adinkras = [adinkra_list]
 	else:
 		pass
-	""" Store n Vij bosonic matrices in vij_bosonic	"""
+	''' Store n Vij bosonic matrices in vij_bosonic	'''
 	vij_bosonic	= []
 	ij_indices = list(itertools.combinations([0,1,2,3], 2))
 
@@ -148,15 +150,9 @@ def calc_vij_alphabeta(main_tetrad_list):
 	ij_indices	= list(itertools.combinations([0,1,2,3], 2))
 	vij_mats	= []
 	debug		= 0
-
 	print("							")
 	print("Calculating Vij matrices")
-	print("							")
 	for ti, teti in enumerate(main_tetrad_list):
-		# if debug:
-		# 	print("# ********************************")
-		# 	print("								     ")
-		# 	print("Tetrad i: ", ti)
 		vij_tempset = []
 		for ijtup in ij_indices:
 			limat 		= teti[ijtup[0]][1]
@@ -171,13 +167,8 @@ def calc_vij_alphabeta(main_tetrad_list):
 			# Compare against the 6 possible matrix solutions
 			for xi, ijx in enumerate(vij_possibilities):
 				ijx_neg = np.multiply(ijx, -1)
-				# print(xi)
 				if np.array_equal(temp_mat, ijx):
 					tf_bool = 1
-					# if debug:
-					# 	print("*************$$$$$$$$$$$$$$$$$$ ")
-					# 	print("l-solution found:")
-					# 	print(ijx)
 					tmint = np.int(1)
 					if xi < 3:
 						tmp_str = "alpha" + str((xi + 1))
@@ -191,10 +182,6 @@ def calc_vij_alphabeta(main_tetrad_list):
 						continue
 				elif np.array_equal(temp_mat, ijx_neg):
 					tf_bool = 1
-					# if debug:
-					# 	print("*************$$$$$$$$$$$$$$$$$$ ")
-					# 	print("l-solution found:")
-					# 	print(ijx_neg)
 					tmint = np.int(-1)
 					if xi < 3:
 						tmp_str = "alpha" + str((xi + 1))
