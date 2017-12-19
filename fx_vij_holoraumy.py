@@ -139,11 +139,11 @@ def bosonic_holomats(adinkra_list):
 
 #>******************************************************************************
 def calc_vij_alphabeta(main_tetrad_list):
-	"""
-	>>> THIS ACTUALLY WORKS - 10/13/2017
-		Calculate ~Tilda~V Fermionic Holoraumy matrices here
-		Remember that the main_tetrad_ark is a list of lists, with each list
-		containing four tuples, each tuple -> (adinkra#, adinkra matrix)
+	"""	>>> THIS ACTUALLY WORKS - 10/13/2017
+		Remember that the main_tetrad_list is a list of lists,
+		with each list containing four tuples, with tuples being an integer
+		index (0 to 383) of the L matrix and the 4x4 np.array representing
+		the L sign permutation matrix
 	"""
 
 	vij_possibilities = alphas_betas()
@@ -208,8 +208,10 @@ def calc_vij_alphabeta(main_tetrad_list):
 # Do the final Vij calculation
 def gadget_one_abcalc(vij_fermi_list):
 	""" Remember that the vij_fermi_list is a list of lists,
-		with each list containing four tuples, with tuples being
-		matrix number and the matrices itself. """
+		with each list containing four tuples, with tuples being an integer
+		index (0 to 383) of the L matrix and the 4x4 np.array representing
+		the L sign permutation matrix
+	"""
 
 	vij_possibil = alphas_betas()
 	ij_indices	= list(itertools.combinations([0,1,2,3], 2))
