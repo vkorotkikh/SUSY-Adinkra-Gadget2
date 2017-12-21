@@ -24,9 +24,10 @@ def info(title):
 #>******************************************************************************
 # def org_gadgetcalc(vij_holomat_list, abcoefs):
 def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
-	""" Performs New Gadget calculation using only the Alpha-Beta coefficients
-		Uses multiprocessing module in splitting up the Gadget calc. into
-		packs of 64.
+	""" This function executs the New Gadget calculation aka Gadget mk II using
+	passed in Alpha-Beta coefficients. Uses the multiprocessing module to speed
+	up the Gadget calculation x fold.
+	abcoef_list - list of lists, w/ each list containg 6 coefficients
 	"""
 	print("Executing ", __name__)
 	start_time = time.time()
@@ -93,7 +94,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 
 #>******************************************************************************
 # def org_gadgetcalc(vij_holomat_list, abcoefs):
-def mp_gadgetcalc_abtr(vij_holomat_list, abcoefs):
+def mp_gadgetcalc_abtrace(vij_holomat_list, abcoefs):
 	""" Performs new Gadget calculation using both the Trace method and
 		Alpha-Beta coefficient method
 	"""
@@ -219,6 +220,9 @@ def ng_abc(coef, locabc, xi, sti):
 
 #>******************************************************************************
 def newgadget_abcoefs(coef_l1, locabcoefs, xind,  stind):
+	""" Performs the Gadget Mk II aka the New Gadget calculation by using the
+	Alpha-Beta coefficients to calculate the final Gadget value for each Adinkra
+	"""
 
 	gadgetvals 	= []
 	ijf = coef_l1.copy()
