@@ -38,41 +38,40 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 	pool 	= mp.Pool(processes=mpcount)
 	paksize = int(lenablist/numpaks)	# Splitting 36k A into n sets of len paksize
 	indpaks	= [paksize*n for n in range(0,numpaks)]
+	pgvals	= {}
 
 	for ix, pak in enumerate(indpaks): # for ix 0-7, pak 0-32256, steps 4608
 		islice = pak + paksize
 		abcoefpak 	= ablist[pak:islice]
-		# print("Length ab ", len(abcoefpak))
 		start_pakt = time.time()
 		print("Pack/Slice: ", pak, ":", islice)
-
-		for ind in range(0,paksize):
+		for ind in range(0,paksize): # paksize = 4608
 			adjnum = ind + pak
 			adjanumstr	= str(adjnum)
 			cprintstr1	= "(" + adjanumstr + ", "
-			print("Adinkra:", adjnum)
-			icof	= abcoefpak[ind]
+			icof	= abcoefpak[ind] # i adinkra a/b coef integers
 			complt	= []
-			rngval 	= list(range(adjnum, lenablist, nx))
+			rngval 	= list(range(adjnum, lenablist, nx)) # lenablist = 36k, nx = 576
 			cpacked = [ablist[i:i+nx] for i in rngval if (i+nx) < lenablist]
 			cpacked.append(ablist[rngval[-1]:])
 			cpklen 	= len(cpacked)
-			# abcalc 	= [pool.apply(newgadget_abcoefs, args=(icof, cpacked[xi],xi, adjnum)) for xi in range(0,cpklen)]
-			abcalc 	= [pool.apply_async(newgadget_abcoefs, args=(icof, cpacked[xi],xi, adjnum)) for xi in range(0,cpklen)]
+			abcalc 	= [pool.apply_async(ng_abc, args=(icof, cpacked[xi],xi, adjnum)) for xi in range(0,cpklen)]
 			for px in range(0,cpklen):
 				abcofpak = abcalc[px].get()
 				# abcofpak = abcalc[px][0]
 				for gtval in abcofpak:
-					# indstr = "(" + str(adjnum) + ", " + str(gtval[1]) + ")"
-					indstr = cprintstr1 + str(gtval[1]) + ") -> "
-					gval = indstr + gtval[0]
-					complt.append(gval)
+					if gtval[0] not in pgvals:
+						pgvals[gtval[0]] = 1
+					elif gtval[0] in pgvals:
+						pgvals[gtval[0]]+=1
+					# indstr = cprintstr1 + str(gtval[1]) + ") -> "
+					# gval = indstr + gtval[0]
+					# complt.append(gval)
 			# acalc = "GadgetVal/Adinkra_" + str(adjnum) + ".txt"
-			acalc = "GadgetVal/Adinkra_" + adjanumstr + ".txt"
-			with open(acalc, 'w') as wfile:
-				for cval in complt:
-					wfile.write("%s \n" % cval)
-		# cwdpath		= os.path.basename(mkpath)
+			# acalc = "GadgetVal/Adinkra_" + adjanumstr + ".txt"
+			# with open(acalc, 'w') as wfile:
+			# 	for cval in complt:
+			# 		wfile.write("%s \n" % cval)
 		calcrestxt 	= "GadgetVal/gvalstats" + str(ix+1) + "of8.txt"
 		pakctime	= time.time() - start_pakt
 		adinpermin 	= int(paksize/(pakctime/60))
@@ -81,13 +80,14 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 			wres.write("---- Execution time ----\n")
 			wres.write(("-- " +str(pakctime) + " seconds --\n"))
 			wres.write(("-- " + str(adinpermin) + " Adinkras / minute --\n"))
-		ixdir_name	= "GadgetVal" + str(ix+1) + "of8"
-		resfiles_p	= os.path.join(mkpath, 'GadgetVal')
-		fpath_ixdir	= os.path.join(mkpath, ixdir_name)
-		if not os.path.isdir(fpath_ixdir):
-			shutil.move(resfiles_p, fpath_ixdir)
-
+		# ixdir_name	= "GadgetVal" + str(ix+1) + "of8"
+		# resfiles_p	= os.path.join(mkpath, 'GadgetVal')
+		# fpath_ixdir	= os.path.join(mkpath, ixdir_name)
+		# if not os.path.isdir(fpath_ixdir):
+		# 	shutil.move(resfiles_p, fpath_ixdir)
+		print("New Gadget Values", pgvals)
 	tval = time.time() - start_time
+	print("New Gadget Values", pgvals)
 	print("-- Execution time --")
 	print("---- %s seconds ----" % tval)
 	print("---- %s Adinkras / minute ----" % int(paksize/(tval/60)))
@@ -213,6 +213,10 @@ def newgadget_trace(vij_holomats1, vij_holomats2):
 	# rawtrace = np.trace(matc)
 	# print("Trace value:", rawtrace)
 	return gadgetval
+
+#>******************************************************************************
+def ng_abc(coef, locabc, xi, sti):
+	return newgadget_abcoefs(coef, locabc, xi, sti)
 
 #>******************************************************************************
 def newgadget_abcoefs(coef_l1, locabcoefs, xind,  stind):

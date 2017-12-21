@@ -139,8 +139,7 @@ def bosonic_holomats(adinkra_list):
 
 #>******************************************************************************
 def calc_vij_alphabeta(main_tetrad_list):
-	"""	>>> THIS ACTUALLY WORKS - 10/13/2017
-		Remember that the main_tetrad_list is a list of lists,
+	"""	Note: main_tetrad_list is a list of lists,
 		with each list containing four tuples, with tuples being an integer
 		index (0 to 383) of the L matrix and the 4x4 np.array representing
 		the L sign permutation matrix
