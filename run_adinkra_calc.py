@@ -41,8 +41,6 @@ def main():
 		vijmat_list = NewAdink.ret_fermiholo()
 		abcoef_list = NewAdink.ret_fermi_abcoef()
 		# ultra_fermi = NewAdink.ret_ultrafermi()
-
-		# sys.exit()
 		print("Executing New Gadget calc")
 		fx_mpgadgets.mp_gadgetcalc_abonly(abcoef_list)
 		# fx_gadgets.org_gadgetcalc(vijmat_list, abcoef_list,ultra_fermi)

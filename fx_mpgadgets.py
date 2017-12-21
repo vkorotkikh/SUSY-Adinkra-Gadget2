@@ -64,14 +64,13 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 						pgvals[gtval[0]] = 1
 					elif gtval[0] in pgvals:
 						pgvals[gtval[0]]+=1
-					# indstr = cprintstr1 + str(gtval[1]) + ") -> "
-					# gval = indstr + gtval[0]
-					# complt.append(gval)
-			# acalc = "GadgetVal/Adinkra_" + str(adjnum) + ".txt"
-			# acalc = "GadgetVal/Adinkra_" + adjanumstr + ".txt"
-			# with open(acalc, 'w') as wfile:
-			# 	for cval in complt:
-			# 		wfile.write("%s \n" % cval)
+					indstr = cprintstr1 + str(gtval[1]) + ") -> "
+					gval = indstr + gtval[0]
+					complt.append(gval)
+			acalc = "GadgetVal/Adinkra_" + adjanumstr + ".txt"
+			with open(acalc, 'w') as wfile:
+				for cval in complt:
+					wfile.write("%s \n" % cval)
 		calcrestxt 	= "GadgetVal/gvalstats" + str(ix+1) + "of8.txt"
 		pakctime	= time.time() - start_pakt
 		adinpermin 	= int(paksize/(pakctime/60))
@@ -80,11 +79,11 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 			wres.write("---- Execution time ----\n")
 			wres.write(("-- " +str(pakctime) + " seconds --\n"))
 			wres.write(("-- " + str(adinpermin) + " Adinkras / minute --\n"))
-		# ixdir_name	= "GadgetVal" + str(ix+1) + "of8"
-		# resfiles_p	= os.path.join(mkpath, 'GadgetVal')
-		# fpath_ixdir	= os.path.join(mkpath, ixdir_name)
-		# if not os.path.isdir(fpath_ixdir):
-		# 	shutil.move(resfiles_p, fpath_ixdir)
+		ixdir_name	= "GadgetVal" + str(ix+1) + "of8"
+		resfiles_p	= os.path.join(mkpath, 'GadgetVal')
+		fpath_ixdir	= os.path.join(mkpath, ixdir_name)
+		if not os.path.isdir(fpath_ixdir):
+			shutil.move(resfiles_p, fpath_ixdir)
 		print("New Gadget Values", pgvals)
 	tval = time.time() - start_time
 	print("New Gadget Values", pgvals)
