@@ -56,6 +56,15 @@ the multiprocessing features available in Python and this is reflected as 'mp' i
 The task of calculating Adinkra Gadget values is cumbersome because each Gadget calculation
 takes two Adinkras (they can be the same) this means there is a total of 1.36 billion possible
 Gadget calculations. Therefore multiprocessing was used as a way to significantly speed up
-Adinkra calculations over the BC4 space.
+Adinkra calculations over the BC4 space. This is executed by splitting the calculation into n sets,
+with 1$\leq$n$\leq$64.\par
+The fx{\_}mpgadgets.py can calculate the New Gadget or Gadget mk. 2 value in three different ways.
+First is taking the sum of all traces of V matrices from any two Adinkras. This is performed in
+newgadget{\_}mtraces and newgadget{\_}trace functions. These functions are not multithreaded and
+only return the Gadget II values to caller. The mp{\_}gadgetcalc{\_}abonly function performs the
+Gadget II calculations using the $\tilde{\ell}$ coefficient values. This function is also
+multithreaded (using up to 64 threads) and also writes the Gadget II values for each Adinkra to
+flat text file. Because there are 36,864 Adinkras, the output is split into eight folders
+
 
 \end{document}
