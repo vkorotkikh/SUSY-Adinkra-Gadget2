@@ -47,5 +47,15 @@ script. Within fx{\_}vij{\_}holoraumy.py there are three functions responsible f
 The fermionic{\_}holomats function calculates a set of six $\brtV$ matrices for a
 given Adinkra. The bosonic{\_}holomats function calculates the set of six $\brV$ matrices.
 The calc{\_}vij{\_}alphabeta function uses the six $\brtV$ matrices and alpha beta matrices
-to calculate the corresponding elle coefficient values.
+to calculate the corresponding $\tilde{\ell}$ coefficient values which are used later
+in the calculation of Adinkra x Adinkra Gadget values. Once the calculation is finished
+executing the fx{\_}vij{\_}holoraumy.py script returns an array (list in Python) of calculated
+Holoraumy matrices or $\tilde{\ell}$ coefficients.\par
+The New Gadget value calculation is done by fx{\_}mpgadgets.py script. This script utilizes
+the multiprocessing features available in Python and this is reflected as 'mp' in the script name.
+The task of calculating Adinkra Gadget values is cumbersome because each Gadget calculation
+takes two Adinkras (they can be the same) this means there is a total of 1.36 billion possible
+Gadget calculations. Therefore multiprocessing was used as a way to significantly speed up
+Adinkra calculations over the BC4 space.
+
 \end{document}
