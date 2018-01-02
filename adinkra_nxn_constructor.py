@@ -17,7 +17,7 @@ import numpy as np
 
 #>******************************************************************************
 def unit_vector(n,i):
-	""" Makes colums/rows that compose an Identity matrix	"""
+	""" Makes np.array rows that compose an identity matrix """
 	vec		= [0 for j in range(n)]
 	vec[i] 	= 1
 	return np.array(vec)
@@ -25,8 +25,7 @@ def unit_vector(n,i):
 #>******************************************************************************
 def gen_permutations(n):
 	"""
-		Creates the 24 unsigned permutation matrices from permutation
-		group S4
+	Creates the 24 unsigned permutation matrices from permutation group S4
 	"""
 	# bracket_n = list(range(n))
 	perms_list = list(itertools.permutations(range(n), n))
@@ -42,7 +41,7 @@ def gen_permutations(n):
 #>******************************************************************************
 def gen_signm(n_dim):
 	"""
-	Generate all possible sign permutations for a nxn Identity Matrix
+	Generate all possible sign permutations for an identiy matrix size n
 	"""
 	items		= [1] * int(n_dim)
 	sign_mat 	= []
