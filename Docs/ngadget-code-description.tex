@@ -16,8 +16,7 @@
 
 \begin{abstract}
 This document contains the medium level detail description of the python code
-for generating 36k Adinkras and New Gadget values. Brief intro simple paragraph
-at the beginning of the document.
+for generating 36k Adinkras and New Gadget values.
 \end{abstract}
 
 This document write up contains the description of the software code algorithm
@@ -61,10 +60,17 @@ with 1$\leq$n$\leq$64.\par
 The fx{\_}mpgadgets.py can calculate the New Gadget or Gadget mk. 2 value in three different ways.
 First is taking the sum of all traces of V matrices from any two Adinkras. This is performed in
 newgadget{\_}mtraces and newgadget{\_}trace functions. These functions are not multithreaded and
-only return the Gadget II values to caller. The mp{\_}gadgetcalc{\_}abonly function performs the
-Gadget II calculations using the $\tilde{\ell}$ coefficient values. This function is also
-multithreaded (using up to 64 threads) and also writes the Gadget II values for each Adinkra to
-flat text file. Because there are 36,864 Adinkras, the output is split into eight folders
+only return the Gadget II values to caller.
+The second way is using the $\tilde{\ell}$ coefficients in the calculation of Gadget II values
+in an almost similar fashion to calculation of Gadget values. There is no difference in Gadget II
+values calculated by the Trace method or the $\tilde{\ell}$ coefficient method. The advantage to
+using the $\tilde{\ell}$ coefficients is that it eliminates extensive matrix dot product calculations
+and instead simplifies each gadget calculation to a sum of multiplied -1, 1 and 0. This
+type of Gadget II calculation method is done in the mp{\_}gadgetcalc{\_}abonly function. This
+function utilizes numpy multiprocessing module to split the Gadget II calculations into multiple threads
+(using up to 64 threads) and can also write the Gadget II values for any Adinkra to a text file.
+Each Adinkra's Gadget II values are saved to a numbered text file which makes for 36,864 text files.
+Because of this the text output is designed to be split into eight seperate folders, each holding 4608 text files
 
 
 \end{document}
