@@ -25,27 +25,13 @@ Software wise the code builds upon earlier developments/works by the author but
 with changes to the code that pertains to the final gadget calculation.
 To speed up Gadget calculation, multiprocessing feature has been added and is
 utilized within the code. The code also now produces a text output of the
-results which can be zip compressed for distribution/sharing of results. \par
-
-
-Using the elemets of BC4 Coxeter group, the code \emph{adinkra_nxn_constructor}
-creates the 384 L sign permutation matrices (4x4 matrices) These L sign matrices
-serve as the building blocks of all Adinkras, given that any two of them satisfy
-conditions of a set Garden algebra equations . The same
-script also handles the process of assembling all possible Adinkras using the L
-sign permutation matrices. Starting with 384 L sign matrices, for each L matrix
-the script performs a cross reference loop check that builds a total of 36,864
-Adinkras with N=4 (4 colors), four open-nodes and four closed nodes.
-
-For calculating the Fermionic Holoraumy matrices the script fx_vij_holoraumy.py
-is used. The actual function to do so is calc_fermi_vij( adinkra list) and it
-takes in a ‘list’ or an array of pointers to arrays containing 4 L matrices
-defined using numpy np.array. Using the 4 L sign permutation matrices, the
-V~tilde Holoraumy matrices, V12, V13, V14, V23, V24, V34 are calculated for each
-Adinkra. Each set of six V~tilde Holoraumy matrices are appended to a list which
-then gets appended/added to the final return list. The returned array/list called
-vij_fermi is passed back to it’s execution origin in cls_adinkra.py script which
-serves to declare and describe AdinkraSet class. AdinkraSet class is used to
-executing various Holoraumy functions and storing the return results to be used
-by other functions.
+results which can be zip compressed for distribution/sharing of results.\par
+Utilizing the BC4 Coxeter group space, the adinkra{\_}nxn{\_}constructor.py
+code creates the 384 L sign permutation matrices. These L sign matrices serve as the building 
+blocks of all Adinkras, given that any two of them satisfy conditions of a set Garden algebra 
+equations . The same script also handles the process of assembling all possible Adinkras 
+using the L sign permutation matrices.
+Starting with 384 L sign matrices, for each L matrix the script performs a cross reference loop 
+check that builds a total of 36,864 Adinkras with N=4 (4 colors), four open-nodes and four 
+closed nodes. For calculating the Fermionic Holoraumy matrices the script fx{\_}vij{\_}holoraumy.py is used. 
 \end{document}
