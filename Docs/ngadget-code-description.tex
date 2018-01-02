@@ -1,6 +1,10 @@
 \documentclass[12pt, letterpaper]{article}
 \usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{graphicx}
 
+\def\brV{{\bm {\rm V}}}
+\def\brtV{{\bm{\tilde{\rm V}}}}
 
 \title{New Gadget Code Description}
 \author{Vadim Korotkikh}
@@ -33,12 +37,15 @@ equations. Once the 384 L matrices are created, for each L matrix the script bui
 compatible matrices that satisfy Garden Algebra conditions. For 384 L matrices, counting all
 possible matrix position permutations, there is a grand total of 36,864 Adinkras with N=4 or
 four color, four open node and four close node.\par
-For calculating the Fermionic Holoraumy matrices the script fx{\_}vij{\_}holoraumy.py is used.
+For calculating the Fermionic Holoraumy matrices the
+fx{\_}vij{\_}holoraumy.py script is used.
 This script takes the input of 36,864 Adinkras and for each Adinkra generates a set of six
 V Holoraumy matrices. This script can generate the $\brtV$ Fermionic Holoraumy matrices and the
 $\brV$ Bosonic Holoraumy matrices as well as calculate the elle coefficients for $\brtV$ matrices.
 This depends on the calculation configuration/setting used in run{\_}adinkra{\_}calc.py
 script. Within fx{\_}vij{\_}holoraumy.py there are three functions responsible for handling these tasks.
-The fermionic{\_}holomats function calculates a set of six V Fermionic Holoraumy matrices for a
-given Adinkra.
+The fermionic{\_}holomats function calculates a set of six $\brtV$ matrices for a
+given Adinkra. The bosonic{\_}holomats function calculates the set of six $\brV$ matrices.
+The calc{\_}vij{\_}alphabeta function uses the six $\brtV$ matrices and alpha beta matrices
+to calculate the corresponding elle coefficient values.
 \end{document}
