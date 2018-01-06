@@ -39,6 +39,9 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 	indpaks	= [paksize*n for n in range(0,numpaks)]
 	pgvals	= {}
 
+	''' Splitting Gadget calculation into 8 equally sized sets of length 4608.
+	This is done to minimize the number of Adinkra files per results directory
+	'''
 	for ix, pak in enumerate(indpaks): # for ix 0-7, pak 0-32256, steps 4608
 		islice = pak + paksize
 		abcoefpak 	= ablist[pak:islice]
@@ -63,26 +66,33 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 						pgvals[gtval[0]] = 1
 					elif gtval[0] in pgvals:
 						pgvals[gtval[0]]+=1
-					indstr = cprintstr1 + str(gtval[1]) + ") -> "
-					gval = indstr + gtval[0]
-					complt.append(gval)
-			acalc = "GadgetVal/Adinkra_" + adjanumstr + ".txt"
-			with open(acalc, 'w') as wfile:
-				for cval in complt:
-					wfile.write("%s \n" % cval)
+
+			# 		indstr = cprintstr1 + str(gtval[1]) + ") -> "
+			# 		gval = indstr + gtval[0]
+			# 		complt.append(gval)
+			''' Gadget vals written to text files '''
+			# acalc = "GadgetVal/Adinkra_" + adjanumstr + ".txt"
+			# with open(acalc, 'w') as wfile:
+			# 	for cval in complt:
+			# 		wfile.write("%s \n" % cval)
 		calcrestxt 	= "GadgetVal/gvalstats" + str(ix+1) + "of8.txt"
 		pakctime	= time.time() - start_pakt
 		adinpermin 	= int(paksize/(pakctime/60))
 		with open(calcrestxt, 'w') as wres:
 			wres.write(("Adinkra Slice: " + str(pak) + " : " + str(islice) + "\n"))
+			wres.write("\n")
+			wres.write(" Gadget - Counts \n")
+			for key, gval in pgvals.items():
+				gvalmul = int(gval*2)
+				wres.write(" %s	= %s \n" % (str(key), str(gvalmul)))
 			wres.write("---- Execution time ----\n")
 			wres.write(("-- " +str(pakctime) + " seconds --\n"))
 			wres.write(("-- " + str(adinpermin) + " Adinkras / minute --\n"))
-		ixdir_name	= "GadgetVal" + str(ix+1) + "of8"
-		resfiles_p	= os.path.join(mkpath, 'GadgetVal')
-		fpath_ixdir	= os.path.join(mkpath, ixdir_name)
-		if not os.path.isdir(fpath_ixdir):
-			shutil.move(resfiles_p, fpath_ixdir)
+		# ixdir_name	= "GadgetVal" + str(ix+1) + "of8"
+		# resfiles_p	= os.path.join(mkpath, 'GadgetVal')
+		# fpath_ixdir	= os.path.join(mkpath, ixdir_name)
+		# if not os.path.isdir(fpath_ixdir):
+		# 	shutil.move(resfiles_p, fpath_ixdir)
 		print("New Gadget Values", pgvals)
 	tval = time.time() - start_time
 	print("New Gadget Values", pgvals)
