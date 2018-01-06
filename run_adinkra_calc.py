@@ -21,14 +21,14 @@ import fx_mpgadgets
 #>******************************************************************************
 def main():
 	print("#>***********************************************************************")
-	print("# Name:    Caculate all BC4-based Adinkras")
+	print("# Name:    Caculate all BC4 Coxeter Group Space Adinkras")
 	print("# Author:  Vadim Korotkikh	")
 	# print("# Email:   va.korotki@gmail.com")
 	print("# Date:    December 2016		")
 	print("# Version: 2.0 Update in Progress Sept 2017")
 	print("#							")
-	print("# Description: Calculates all unique 36,864 ordered BC4-based adinkras")
-	print("# with four colors, four open-nodes and four closed nodes.             ")
+	# print("# Description: Calculates all unique 36,864 ordered BC4-based adinkras")
+	# print("# with four colors, four open-nodes and four closed nodes.             ")
 	print("#	")
 	print("#>***********************************************************************")
 	print("		")
