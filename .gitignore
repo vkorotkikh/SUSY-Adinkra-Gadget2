@@ -1,6 +1,12 @@
 __pycache__/
 test*.txt
-gval*.txt
 GadgetVal/*
 Adinkra_*
 *.tar.gz
+gvalstats*.txt
+Docs/ngadget-code-description*dvi
+*code-description*log
+*ngadget-code-description.out
+*ngadget-code-description.fls
+*ngadget-code-description.aux
+*ngadget-code-description.fdb_latexmk
