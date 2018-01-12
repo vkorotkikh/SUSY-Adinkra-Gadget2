@@ -34,7 +34,7 @@ def main():
 	print("		")
 	adinkra_list	= []
 	adinkra_list	= adinkra_nxn_constructor.create_adinkras(4,4)
-
+	sys.exit()
 	if len(adinkra_list) == 36864:
 		NewAdink = cls_adinkra_set.AdinkraSet(4,4,adinkra_list)
 		NewAdink.exe_fermiorder()
