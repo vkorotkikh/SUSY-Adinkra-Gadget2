@@ -14,7 +14,7 @@ import numpy as np
 
 # Function Imports
 import fx_gadgets
-import adinkra_nxn_constructor
+import adinkra_bc4maker
 import cls_adinkra_set
 import fx_mpgadgets
 
@@ -33,8 +33,9 @@ def main():
 	print("#>***********************************************************************")
 	print("		")
 	adinkra_list	= []
-	adinkra_list	= adinkra_nxn_constructor.create_adinkras(4,4)
-	sys.exit()
+	adinkra_list	= adinkra_bc4maker.create_adinkras(4,4)
+	print("Length adinkra_list	%s " % (str(len(adinkra_list))))
+
 	if len(adinkra_list) == 36864:
 		NewAdink = cls_adinkra_set.AdinkraSet(4,4,adinkra_list)
 		NewAdink.exe_fermiorder()
