@@ -10,7 +10,18 @@
 
 # Library Imports
 import os, sys, time
-import numpy as np
+import logging
+
+logger = logging.getLogger(__name__)
+
+# Check Python version
+py_ver = ''
+if sys.version_info >= (3,5):
+	py_ver = '3.5'
+elif sys.version_info >= (2,7):
+	py_ver = '2.7'
+else:
+	raise Exception("Minimum Python 2.7 or Python 3.5 are required for this code.")
 
 # Function Imports
 import fx_gadgets
