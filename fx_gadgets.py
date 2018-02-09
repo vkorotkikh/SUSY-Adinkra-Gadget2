@@ -68,14 +68,12 @@ def new_gadgetcalc_abonly(abcoef_list):
 
 	print("New Gadget Values", pgvals)
 	# tval = time.time() - start_time
-	# print("New Gadget Values", pgvals)
 	# print("-- Execution time --")
 	# print("---- %s seconds ----" % tval)
 	# print("---- %s Adinkras / minute ----" % int(paksize/(tval/60)))
 
-
 #>******************************************************************************
-def org_gadgetcalc(vij_holomat_list, abcoefs):
+def org_gadgetcalc(vij_holomat_list, abcoefs, vij_ultramats):
 
 	lenvijlt = len(vij_holomat_list)
 	print("Len vijlist: ", lenvijlt)
@@ -91,20 +89,83 @@ def org_gadgetcalc(vij_holomat_list, abcoefs):
 				# g1val = gadget_one_trace(vijlist[xind], vijlist[zind])
 				# gorig = original_coef_gadget(abcoefs[xind], abcoefs[zind])
 				gtrace = newgadget_trace(vijlist[xind], vijlist[zind])
+				gultra = gadget_ultrafermi(vij_ultramats[xind], vij_ultramats[zind])
 				gnewab = newgadget_abcoef(abcoefs[xind], abcoefs[zind])
-				# print("Adinkras:",xind,zind,"-> Gnew", gtrace, "GnewAB", gnewab)
-				if gtrace == gnewab:
+				# print("Adinkras:",xind,zind,"-> Gnew", gtrace, "G-ULTRA", gultra, "GnewAB", gnewab)
+				if gtrace == gnewab and gultra != 0:
 					totcount+=1
-					# print("Adinkras:",xind,zind,"-> Gnew", gtrace,"GnewAB", gnewab)
-					print("Adinkras",xind,zind,"-> GnewTrace", gtrace, "GnewAB", gnewab)
+					# print("Adinkras:",xind,zind,"-> Gnew", gtrace, "G-ULTRA", gultra, "GnewAB", gnewab)
+					print("Adinkras",xind,zind,"-> GnewTrace", gtrace, "GnewAB", gnewab, "G-Ultra", gultra)
 				elif gtrace != gnewab:
 					probcount+=1
-					print("ERROR: ",xind,zind,"-> GnewTrace", gtrace, "GnewAB", gnewab)
+					print("ERROR: ",xind,zind,"-> GnewTrace", gtrace, "GnewAB", gnewab, "G-Ultra", gultra)
 
 	print("################################################")
 	print("Gadget #:", totcount)
 	print("Error  #:", probcount)
 
+#>******************************************************************************
+def ng_abc(coef, locabc):
+	return newgadget_abcoefs(coef, locabc)
+
+#>******************************************************************************
+def newgadget_abcoefs(coef_l1, locabcoefs):
+	""" Performs the Gadget Mk II aka the New Gadget calculation by using the
+	Alpha-Beta coefficients to calculate the final Gadget value for each Adinkra
+	"""
+
+	gadgetvals 	= []
+	''' Doing shallow list copy of coef_l1.
+	Python 2 - newlist = old_list[:],  or list(old_list)
+
+	'''
+	ijf = list(coef_l1)
+	# startind	= xind*len(locabcoefs) + stind
+	# startind 	= xind * 576 + stind
+	div_factor	= 6
+
+	ev	= [1, -1, 1, 1, -1, 1]
+	rng6 = range(0,6)
+	rng3 = range(0,3)
+	for xab, abcoef in enumerate(locabcoefs):
+		# reali = startind + xab
+		ijx = abcoef
+		gadgetval	= "0"
+		if all(ijf[i][0] == ijx[-i-1][0] for i in rng6):
+			# print("ijf", coef_l1)
+			# print("ijx", coef_l2[::-1])
+			coefv = sum([(ijf[ix][2] * ijx[-ix-1][2])*(ev[ix]) for ix in rng6])/div_factor
+			if coefv == (-1/3):
+				gadgetval = "-1/3"
+			elif coefv == (1/3):
+				gadgetval = "1/3"
+			elif coefv == 1:
+				gadgetval = "1"
+			elif coefv == -1:
+				gadgetval = "-1"
+			# gadgetval = coefv/div_factor
+			# print("NGadget AB:", int(coefv/(-2)))
+			gadgetvals.append(gadgetval)
+		elif any(ijf[i][0] == ijx[-i-1][0] for i in rng3):
+			for ix in rng3:
+				if (ijf[ix][0] == ijx[-ix-1][0]):
+					coefv = sum([ijf[ix][2] * ijx[5-ix][2] * ev[ix], ijf[5-ix][2] * ijx[ix][2] * ev[5-ix]])/div_factor
+					# print("NGadget AB:", int(coefv/(-2)))
+					if coefv == (-1/3):
+						gadgetval = "-1/3"
+					elif coefv == (1/3):
+						gadgetval = "1/3"
+					elif coefv == 1:
+						gadgetval = "1"
+					elif coefv == -1:
+						gadgetval = "-1"
+					gadgetvals.append(gadgetval)
+			# print("ijf", coef_l1[0:3])
+			# print("ijx", coef_l2[:2:-1])
+		else:
+			gadgetvals.append(gadgetval)
+	# return gadgetvals, (startind, len(locabcoefs)) # for index value testing
+	return gadgetvals
 
 #>******************************************************************************
 def newgadget_trace(vij_holomats1, vij_holomats2):
