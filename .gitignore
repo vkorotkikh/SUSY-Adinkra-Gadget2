@@ -1,12 +1,11 @@
-__pycache__/
 test*.txt
 GadgetVal/*
 *.tar.gz
 gvalstats*.txt
 Docs/ngadget-code-description*dvi
 *code-description*log
-*ngadget-code-description.out
-*ngadget-code-description.fls
-*ngadget-code-description.aux
-*ngadget-code-description.fdb_latexmk
 GadgetVal*of8/Adinkra_*
+
+# Byte-compiled / optimized / DLL files
+*.py[cod]
+__pycache__/
