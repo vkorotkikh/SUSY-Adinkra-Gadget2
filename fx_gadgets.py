@@ -26,6 +26,55 @@ def perm_parity(lst):
 	return parity
 
 #>******************************************************************************
+# def org_gadgetcalc(vij_holomat_list, abcoefs):
+def new_gadgetcalc_abonly(abcoef_list):
+	""" This function executs the New Gadget calculation aka Gadget mk II using
+	passed in Alpha-Beta elle and ~elle coefficients.
+	abcoef_list - list of lists, w/ each list containg 6 int coefficients
+
+	"""
+	print("Executing ", __name__)
+	start_time = time.time()
+	lenablist = len(abcoef_list)
+	paksize = lenablist*lenablist
+	pgvals	= {}
+	# gstats_abpath = fx_mpgadgets.check_or_makedir("GadgetVal")
+
+	# print("Length ABlist %i" % lenablist)
+	for aix, adink in enumerate(abcoef_list): #
+		abcofpak = ng_abc(adink, abcoef_list)
+		for gtval in abcofpak:
+			if gtval not in pgvals:
+				pgvals[gtval]=1
+			elif gtval in pgvals:
+				pgvals[gtval]+=1
+		if aix == 12:
+			print("Adinkra R #:", aix)
+			for xz, val in enumerate(abcofpak):
+				print("Adinkra #: %d G: %s" % (xz, val))
+
+	calcrestxt 	= "GadgetVal/BC4_Small_Lib_stats.txt"
+	pakctime	= time.time() - start_time
+	adinpermin 	= int(paksize/(pakctime/60))
+	with open(calcrestxt, 'w') as wres:
+		# wres.write(("Adinkra Slice: " + str(pak) + " : " + str(islice) + "\n"))
+		wres.write("\n")
+		wres.write(" Gadget - Counts \n")
+		for key, gval in pgvals.items():
+			wres.write(" %s	= %s \n" % (str(key), str(gval)))
+		wres.write("---- Execution time ----\n")
+		wres.write(("-- " +str(pakctime) + " seconds --\n"))
+		wres.write(("-- " + str(adinpermin) + " Adinkras / minute --\n"))
+
+	print("New Gadget Values", pgvals)
+	# tval = time.time() - start_time
+	# print("New Gadget Values", pgvals)
+	# print("-- Execution time --")
+	# print("---- %s seconds ----" % tval)
+	# print("---- %s Adinkras / minute ----" % int(paksize/(tval/60)))
+
+
+#>******************************************************************************
 def org_gadgetcalc(vij_holomat_list, abcoefs):
 
 	lenvijlt = len(vij_holomat_list)
