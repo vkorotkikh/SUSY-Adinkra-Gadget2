@@ -18,11 +18,11 @@ logger = logging.getLogger(__name__)
 py_ver = ''
 if sys.version_info >= (3,5):
 	py_ver = '3.5'
-elif sys.version_info >= (2,7):
+elif sys.version_info >= (2,7) and sys.version_info < (3,5):
 	py_ver = '2.7'
+	raise Exception("Minimum Python 2.7 or Python 3.5 are required for this code.")
 else:
 	raise Exception("Minimum Python 2.7 or Python 3.5 are required for this code.")
-
 # Function Imports
 import fx_gadgets
 import adinkra_bc4maker
@@ -32,14 +32,10 @@ import fx_mpgadgets
 #>******************************************************************************
 def main():
 	print("#>***********************************************************************")
-	print("# Name:    Caculate all BC4 Coxeter Group Space Adinkras")
+	print("# Name:    Calculate all BC4 Coxeter Group space Adinkras")
 	print("# Author:  Vadim Korotkikh	")
-	# print("# Email:   va.korotki@gmail.com")
-	print("# Date:    December 2016		")
-	print("# Version: 2.0 Update in Progress Sept 2017")
+	print("# Date:    December 2018		")
 	print("#							")
-	# print("# Description: Calculates all unique 36,864 ordered BC4-based adinkras")
-	# print("# with four colors, four open-nodes and four closed nodes.             ")
 	print("#	")
 	print("#>***********************************************************************")
 	print("		")
