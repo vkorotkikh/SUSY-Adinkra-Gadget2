@@ -1,1 +1,1 @@
-# SUSY-Adinkra-NewGadget
+# Adinkra Gadget II Calculation Script
