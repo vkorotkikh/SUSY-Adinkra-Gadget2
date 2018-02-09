@@ -8,18 +8,7 @@
 
 # Library Imports
 import itertools
-from itertools import permutations
 import numpy as np
-
-#>******************************************************************************
-# def main():
-# 	nx = 4
-# 	perms_list = list(itertools.permutations([0,1,2,3],nx))
-# 	# parity_list = perm_parity(perms_list)
-# 	for p in perms_list:
-# 		l = list(p)
-# 		# print("%2i %r" % (perm_parity(l), p))
-# 		print("%r %2i" % (p, perm_parity(l)))
 
 #>******************************************************************************
 def perm_parity(lst):
