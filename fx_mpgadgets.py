@@ -7,11 +7,13 @@
 # ******************************************************************************
 
 # Library Imports
-import os, sys, time, itertools, shutil
+import os, time, itertools, shutil
 import numpy as np
 # Specific imports -< FOR DEV >-
 import logging
 import multiprocessing as mp
+
+logger = logging.getLogger(__name__)
 
 #>******************************************************************************
 def info(xtitle):
@@ -20,14 +22,22 @@ def info(xtitle):
 	print("")
 
 #>******************************************************************************
+def mp_gcalcab_valcount(abcoeflist, mpcount=64, numpaks=8):
+	return mp_gadgetcalc_abonly(abcoeflist, mpcount, numpaks)
+
+#>******************************************************************************
 # def org_gadgetcalc(vij_holomat_list, abcoefs):
 def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 	""" This function executs the New Gadget calculation aka Gadget mk II using
-	passed in Alpha-Beta coefficients. Uses the multiprocessing module to speed
-	up the Gadget calculation x fold.
-	abcoef_list - list of lists, w/ each list containg 6 coefficients
+	passed in Alpha-Beta elle and ~elle coefficients. Uses the multiprocessing
+	module to speed up the Gadget calculation.
+	abcoef_list - list of lists, w/ each list containg 6 int coefficients
+	mpcount - number of threads for multiprocessing.Pool
+	numpaks - default = 8. num of calculation sets or packs. The 36864 are
+	divided into this amount of equally sized sets, if possible.
 	"""
-	print("Executing ", __name__)
+	# print("Executing ", __name__)
+	logger.info("Running %s " % (__name__))
 	start_time = time.time()
 	lenablist = len(abcoef_list)
 	ablist = abcoef_list[:]
