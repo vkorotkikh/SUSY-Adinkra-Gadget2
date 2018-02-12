@@ -8,6 +8,8 @@
 
 
 import sys
+
+pyver = sys.version_info[0:3]
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -40,6 +42,7 @@ def do_ltslice_repack(lt_arg, numpaks):
     return lt_repack
 
 
+#>******************************************************************************
 if __name__ == "__main__":
 
     try:

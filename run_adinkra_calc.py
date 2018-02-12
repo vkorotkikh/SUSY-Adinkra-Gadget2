@@ -43,6 +43,7 @@ def main():
 	adinkra_list	= adinkra_bc4maker.create_adinkras(4,4)
 	print("Length adinkra_list	%s " % (str(len(adinkra_list))))
 
+	logger.debug("Finished creating 36,864 Adinkras")
 	if len(adinkra_list) == 36864:
 		NewAdink = cls_adinkra_set.AdinkraSet(4,4,adinkra_list)
 		NewAdink.exe_fermiorder()
