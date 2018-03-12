@@ -112,7 +112,7 @@ def mp_gadgetcalc_abonly(abcoef_list, mpcount=64, numpaks=8):
 
 #>******************************************************************************
 # def org_gadgetcalc(vij_holomat_list, abcoefs):
-def mp_gadgetcalc_abtrace(vij_holomat_list, abcoefs):
+def mp_gadgetcalc_abtrace(vij_holomat_list, abcoefs, numpaks=8):
 	""" Performs new Gadget calculation using both the Trace method and
 		Alpha-Beta coefficient method
 	"""
@@ -120,11 +120,12 @@ def mp_gadgetcalc_abtrace(vij_holomat_list, abcoefs):
 	start_time = time.time()
 
 	lenvijlt = len(vij_holomat_list)
-	vijlist = vij_holomat_list
+	vijlist = vij_holomat_list[:]
 
 	numpaks	= 8	# Number of calculation packs
-	nx		= int(lenvijlt/64)
-	pool 	= mp.Pool(processes=64)
+	divcntr = 64
+	nx		= int(lenvijlt/divcntr)
+	pool 	= mp.Pool(processes=divcntr)
 	paksize = int(lenvijlt/numpaks)	# Splitting 36k A into n sets of len paksize
 	indpaks	= [paksize*n for n in range(0,numpaks)]
 
